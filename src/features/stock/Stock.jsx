@@ -2,7 +2,7 @@
 export default function Stock() {
   return (
     <div>
-      <h1 className="text-2xl font-bold">Bienvenue sur le Stock</h1>
+      <h1 className="px-10 text-2xl font-bold">Bienvenue sur le Stock</h1>
     </div>
   );
 }

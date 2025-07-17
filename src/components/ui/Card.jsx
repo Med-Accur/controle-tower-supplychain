@@ -1,4 +1,7 @@
-// src/components/ui/Card.jsx
+import React from "react";
+import Button from "./Button";
+import { ChevronDown } from "lucide-react";
+
 export default function Card({
   title,
   value,
@@ -9,13 +12,14 @@ export default function Card({
     <div
       className={`rounded-2xl border border-[#D6D6D6] bg-[#F9FAFB] p-5 shadow-sm md:p-6 ${className}`}
     >
+      
       {icon && (
         <div className="flex items-center justify-center w-12 h-12 bg-[#f0eee9] rounded-xl">
           {/* Si icon est un composant React ou JSX */}
           <div className="text-[#A79882] text-xl">{icon}</div>
         </div>
       )}
-
+ 
       {(title || value) && (
         <div className="flex items-end justify-between mt-5">
           <div>
