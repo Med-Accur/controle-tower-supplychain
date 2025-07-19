@@ -14,7 +14,8 @@ export default function KpiCards({ cards = [], kpi }) {
     const newKpis = [...selectedKpis];
     newKpis[index] = newKey;
     setSelectedKpis(newKpis);
-    setOpenDropdownIndex(null);
+    setOpenDropdownIndex(null);     
+    fetchCmdKpis(newKey);    
   };
   
   
@@ -22,7 +23,7 @@ export default function KpiCards({ cards = [], kpi }) {
     selectedKpis.forEach((kpi) => {
         fetchCmdKpis(kpi);
     });
-  }, [selectedKpis]);
+  }, []);
   
   return (
     <>

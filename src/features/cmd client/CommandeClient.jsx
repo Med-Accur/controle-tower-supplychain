@@ -14,12 +14,11 @@ const selectedKpis=[
     ];
 
 export default function CommandeClient() {
-  const { kpis, kpiData, loading, fetchCmdKpis, fetchKpis } = useCommandes();
+  const { kpis, loading, fetchKpis } = useCommandes();
 
   useEffect(() => {
     fetchKpis("cmd_client");
   }, []);
-  console.log(kpis,kpiData)
   const [open, setOpen] = useState(false);
   const [selectedKpi, setSelectedKpi] = useState("");
 
@@ -34,7 +33,7 @@ export default function CommandeClient() {
         <div className="px-10 py-6">
           <h1 className="text-2xl font-bold">Bienvenue sur le CommandeClient</h1>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> 
-            <KpiCards cards={kpis} fetchCmdKpis={fetchCmdKpis} kpi={selectedKpis} />
+            <KpiCards cards={kpis}  kpi={selectedKpis} />
           </div>
           <div className="py-6 fixed right-16">
             <Button
