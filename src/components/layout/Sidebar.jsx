@@ -17,10 +17,6 @@ export default function Sidebar({ isCollapsed }) {
       className={`fixed top-0 left-0 h-screen flex flex-col bg-white border-r border-gray-200
       ${isCollapsed ? "w-25" : "w-70"} transition-width duration-300 ease-in-out`}
     >
-        
-            
-        
-      {/* Logo / titre en haut */}
       <div className="flex items-center justify-center h-16 border-b border-gray-200">
         {!isCollapsed ? (
           <h2 className="text-xl font-bold text-blue-600">MonApp</h2>
@@ -28,8 +24,6 @@ export default function Sidebar({ isCollapsed }) {
           <div className="text-2xl font-bold text-blue-600">M</div>
         )}
       </div>
-
-      {/* Menu */}
       <div className="flex flex-col flex-1 p-4 space-y-2 overflow-auto">
         {menuItems.map(({ label, icon: Icon, path }) => {
             const isActive = location.pathname === path;

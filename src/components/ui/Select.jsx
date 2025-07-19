@@ -27,12 +27,12 @@ export default function Select({
           error ? "border-b border-red" : "border-b border-stone-300"
         }`}
       >
-        <option value="" disabled>
+        <option value="" disabled> 
           {placeholder}
         </option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
+          <option key={opt.value} value={opt.value} className="border-none">
+            {opt.nom}
           </option>
         ))}
       </select>

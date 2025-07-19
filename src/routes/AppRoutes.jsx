@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Dashboard from "../features/dashboard/Dashboard";
 import Fournisseurs from "../features/fournisseurs/fournisseurs"
-import CommandeClient from "../features/commande client/CommandeClient";
+import CommandeClient from "../features/cmd client/CommandeClient";
 import Stock from "../features/stock/Stock";
 
 export default function AppRoutes() {
