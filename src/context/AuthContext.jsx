@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../supabase/supabase';
+import { createContext, useContext, useEffect, useState } from "react";
+import * as authService from "../servicess/auth/authService";
 
 const AuthContext = createContext();
 
@@ -8,37 +8,31 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    authService.getCurrentSession().then(({ data: { session } }) => {
       setUser(session?.user || null);
       setLoading(false);
     });
 
-    
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: listener } = authService.onAuthChange((_event, session) => {
       setUser(session?.user || null);
-      setLoading(false); // 
     });
 
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   const login = async ({ email, password }) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await authService.signIn(email, password);
     if (error) throw error;
     setUser(data.user);
   };
 
   const logout = async () => {
-    await supabase.auth.signOut();
+    await authService.signOut();
     setUser(null);
   };
 
   const resetPassword = async (newPassword) => {
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) throw error;
+    await authService.resetPassword(newPassword);
   };
 
   return (
@@ -49,4 +43,3 @@ export function AuthProvider({ children }) {
 }
 
 export const useAuth = () => useContext(AuthContext);
-export default AuthContext;

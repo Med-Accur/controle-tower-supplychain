@@ -23,16 +23,16 @@ export default function Select({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full  text-base text-neutral-700 py-2 focus:outline-none focus:border-indigo-600 ${
-          error ? "border-b border-red" : "border-b border-stone-300"
+        className={`w-full text-base text-black bg-white py-2 px-2 rounded focus:outline-none focus:border-indigo-600 ${
+          error ? "border-b border-red-500" : "border-b border-stone-300"
         }`}
       >
-        <option value="" disabled> 
+        <option value="" disabled>
           {placeholder}
         </option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value} className="border-none">
-            {opt.nom}
+          <option key={opt.value} value={opt.value} className="text-black bg-white">
+            {opt.label}
           </option>
         ))}
       </select>

@@ -8,7 +8,6 @@ export async function getKpi(kpi) {
 }
 
 
-
 export async function getCommandeKpis(kpiName) {
   const { data, error } = await supabase.rpc("get_kpi_cmd_clients",{
     kpi_name: kpiName
