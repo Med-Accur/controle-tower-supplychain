@@ -20,10 +20,10 @@ export function useDashboard() {
         }
     };
 
-    const fetchDataTable = async (rpcName) => {
+    const fetchDataTable = async (rpcName, params = {}) => {
         setLoading(true);
           try {
-          const data = await getDataTable(rpcName);
+          const data = await getDataTable(rpcName, params);
           setTableData((prev) => ({
             ...prev,
             [rpcName]: data ?? null,

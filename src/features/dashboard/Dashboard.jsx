@@ -23,7 +23,7 @@ export default function Dashboard() {
     fetchTable();
   }, []);
 
-  // Fonction utilitaire pour générer les layouts selon le nombre de colonnes
+   
   const generateLayout = (cols) => {
     return [
       ...selectedKpis.card.map((item, index) => ({
@@ -70,7 +70,7 @@ export default function Dashboard() {
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
         cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
         rowHeight={160}
-        margin={[20, 10]} // Espacement entre widgets
+        margin={[20, 10]} 
         isResizable={false}
         isDraggable={true}
         measureBeforeMount={false}
@@ -83,13 +83,15 @@ export default function Dashboard() {
             <CardWidget kpi={[item]} />
           </div>
         ))}
-
+       
         {selectedKpis.table.map((item) => (
           <div key={`table-${item.key}`}>
             <TableWidget tableInfo={[item]} />
           </div>
         ))}
+         
       </ResponsiveGridLayout>
+     
     </div>
   );
 }

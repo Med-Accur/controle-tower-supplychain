@@ -17,7 +17,7 @@ export default function CommandeClient() {
   const [generatedCharts, setGeneratedCharts] = useState([]);
 
   useEffect(() => {
-    fetchKpis("cmd_client");
+    fetchKpis(["cmd_client"]);
     fetchChartsMeta("cmd_client");
   }, []);
 
@@ -25,9 +25,9 @@ export default function CommandeClient() {
     fetchChartData(rpc_name, kpi, filters);
     setGeneratedCharts((prev) => [...prev, { type: chartType, kpi, rpc_name }]);
   };
-console.log("CommandeClient filters:", filters);
+
   if (loading) return <div className="p-6">Chargement...</div>;
-console.log("CommandeClient kpis:", kpis);
+
   return (
     <div className="px-10 py-6">
       <h1 className="text-2xl font-bold mb-4">Bienvenue sur le CommandeClient</h1>

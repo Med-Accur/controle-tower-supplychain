@@ -1,33 +1,37 @@
 import { useEffect, useState, useRef } from "react";
 import Button from "../../components/ui/Button";
+import Modal from "../../components/ui/Modal";
+import Input from "../../components/ui/Input";
 import {ListFilterPlus} from "lucide-react";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
 
 export default function TableWidget({ tableInfo = [] }) {
-  const { tableData, loading, fetchDataTable } = useDashboard();
-  const fetchedTableRef = useRef(new Set());
+  const [open, setOpen] = useState(false);
+  const [send, setSend] = useState(false);
+  const [filterData, setFilterData] = useState({});
+  const { tableData, fetchDataTable } = useDashboard();
   const [paginationStates, setPaginationStates] = useState({});
-
+    
   useEffect(() => {
-    const newItems = tableInfo.filter((item) => !fetchedTableRef.current.has(item.key));
-    if (newItems.length === 0) return;
+        const newItems = tableInfo.map((item) => item.rpc_name);   
+        fetchDataTable(newItems, filterData);
+        setFilterData({});
+    }, [tableInfo, send]); 
 
-    newItems.forEach((item) => {
-      fetchDataTable(item.rpc_name);
-      fetchedTableRef.current.add(item.key);
-    });
-  }, [tableInfo]);
+  const filtreTable = () => {
+     setOpen(false);
+     setSend(!send);
+    };
 
-  
   const handlePageChange = (tableKey, newPage) => {
-    setPaginationStates((prev) => ({
-      ...prev,
-      [tableKey]: {
-        ...(prev[tableKey] || {}),
-        currentPage: newPage,
-      },
-    }));
-  };
+        setPaginationStates((prev) => ({
+        ...prev,
+        [tableKey]: {
+            ...(prev[tableKey] || {}),
+            currentPage: newPage,
+        },
+        }));
+   };
  
   return (
     <>
@@ -45,7 +49,7 @@ export default function TableWidget({ tableInfo = [] }) {
           >
             <div className="flex m-2 justify-between items-center mt-3 text-sm">
               <h2 className="text-xl font-semibold mb-2">{table.nom}</h2>
-              <Button className="no-drag inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800">
+              <Button onClick={() => setOpen(true)} className="no-drag inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800">
                 <ListFilterPlus className="w-5 h-5"/>Filter
               </Button>
             </div>
@@ -109,6 +113,35 @@ export default function TableWidget({ tableInfo = [] }) {
           </div>
         );
       })}
+
+            <Modal 
+              isOpen={open}
+              onClose={() => setOpen(false)}
+              title={`Filtrer ${tableInfo[0].nom}`}
+            >
+                {tableInfo.map((col, i) => {
+                  return ( 
+                    <div key={i}>
+                      {col.filtre.map((k, i) => (
+                        <Input 
+                            key={i}
+                            type={k.type}
+                            label={k.label}
+                            placeholder={`${k.label}`}
+                            className="mb-4"
+                            onChange={(e) => {
+                                setFilterData(prev => ({
+                                ...prev,
+                                [`${k.label}`]: e.target.value
+                                }));
+                            }}
+                            />
+                      ))}
+                    </div>
+                  );
+                })}
+                <Button className='bg-blue-500 text-white border border-blue-500' onClick={() => { filtreTable()}}>Ajouter</Button>
+            </Modal>
     </>
   );
 }

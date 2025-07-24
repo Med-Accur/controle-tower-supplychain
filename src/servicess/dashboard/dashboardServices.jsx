@@ -7,8 +7,20 @@ export async function getTable() {
 }
 
 
-export async function getDataTable(rpcName) {
-  const { data, error } = await supabase.rpc(rpcName);
+export async function getDataTable(rpcName, params = {}) {
+  const {
+    statut_filter,
+    client_filter,
+    date_min,
+    date_max,
+  } = params;
+  
+  const { data, error } = await supabase.rpc(rpcName, {
+    statut_filter,
+    client_filter,
+    date_min,
+    date_max,
+  });
   if (error) throw new Error("Erreur récupération des données : " + error.message);
   return data;
 }
