@@ -17,7 +17,7 @@ export default function CommandeClient() {
   const { kpis, loading, fetchKpis } = useCommandes();
 
   useEffect(() => {
-    fetchKpis("cmd_client");
+    fetchKpis(["cmd_client"]);
   }, []);
   const [open, setOpen] = useState(false);
   const [selectedKpi, setSelectedKpi] = useState("");
@@ -35,7 +35,7 @@ export default function CommandeClient() {
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> 
             <KpiCards cards={kpis}  kpi={selectedKpis} />
           </div>
-          <div className="py-6 fixed right-16">
+          <div className="py-6 right-16">
             <Button
               className="bg-blue-500 text-white px-3 py-1 rounded"
               onClick={() => setOpen(true)}

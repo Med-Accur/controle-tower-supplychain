@@ -1,4 +1,5 @@
 import { NavLink,useLocation } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import {Home,Package,Users,DollarSign,Megaphone} from "lucide-react";
 
 const menuItems = [
@@ -17,11 +18,11 @@ export default function Sidebar({ isCollapsed }) {
       className={`fixed top-0 left-0 h-screen flex flex-col bg-white border-r border-gray-200
       ${isCollapsed ? "w-25" : "w-70"} transition-width duration-300 ease-in-out`}
     >
-      <div className="flex items-center justify-center h-16 border-b border-gray-200">
+      <div className="flex items-center justify-center h-18 border-b border-gray-200">
         {!isCollapsed ? (
-          <h2 className="text-xl font-bold text-blue-600">MonApp</h2>
+          <h2 className="text-md font-bold text-[#bfa76f]">Contole Tower Supplychain</h2>
         ) : (
-          <div className="text-2xl font-bold text-blue-600">M</div>
+            <img src={logo} alt="Logo" className="h-10 w-10"/>
         )}
       </div>
       <div className="flex flex-col flex-1 p-4 space-y-2 overflow-auto">
