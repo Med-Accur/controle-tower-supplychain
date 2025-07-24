@@ -1,28 +1,29 @@
 // src/features/auth/ForgetPassword.jsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../supabase/supabase';
 import Button from '../../components/ui/Button';
+import { useAuthLogic } from '../../hooks/auth/useAuthLogic';
+import Input from '../../components/ui/Input';
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const { sendResetLink } = useAuthLogic(); 
+
 
   const handleSendResetLink = async (e) => {
     e.preventDefault();
     setMessage('');
     setError('');
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: import.meta.env.VITE_SUPABASE_REDIRECT_URL,
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      setMessage(" Email envoyé ! Vérifiez votre boîte de réception.");
-    }
+    try {
+     await sendResetLink(email);
+;
+      setMessage('✅ Un lien de réinitialisation a été envoyé à votre email.');
+    } catch (err) {
+      setError(`❌ ${err.message}`);
+    } 
   };
 
   return (
@@ -40,13 +41,14 @@ export default function ForgetPassword() {
           </h2>
 
           <label className="block text-xs text-neutral-500 mb-1">Email</label>
-          <input
+          <Input
+           
             type="email"
-            required
-            placeholder="exemple@email.com"
+      
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border-b border-stone-300 text-base text-neutral-700 py-2 mb-6 focus:outline-none focus:border-indigo-600"
+            placeholder="exemple@email.com"
+            required
           />
 
           <Button type="submit" className="w-full bg-[#341B49] text-white py-3 hover:bg-[#47275f]">

@@ -1,12 +1,27 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const StackedBarChart = ({ data, xKey, yKeys, colors, title }) => (
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
+
+const StackedBarChart = ({ data, xKey, yKeys, colors, title, xAxisLabel, yAxisLabel }) => (
   <div className="p-4">
-    {title && <h3 className="text-lg font-semibold">{title}</h3>}
+    <h3 className="text-center font-bold text-lg text-blue-600 mb-2">{title}</h3>
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data}>
-        <XAxis dataKey={xKey} />
-        <YAxis />
+       <XAxis
+  dataKey={xKey}
+  interval={0}
+  angle={-45}
+  textAnchor="end"
+  height={60}
+  label={{
+    value: xAxisLabel,
+    position: "insideBottom",
+    offset: -40,
+  }}
+/>
+
+        <YAxis>
+          {yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />}
+        </YAxis>
         <Tooltip />
         <Legend />
         {yKeys.map((key, index) => (
