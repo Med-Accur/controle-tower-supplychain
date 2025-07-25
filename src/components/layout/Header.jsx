@@ -4,7 +4,7 @@ import UserProfile from "../../features/auth/UserProfile";
 
 export default function Header({ onToggleSidebar }) {
   return (
-    <div className="flex items-center w-full gap-4  bg-white border-gray-200">
+    <div className="flex items-center w-full  bg-white border-gray-200">
       
       {/* Bouton pour le menu burger */}
       <Button

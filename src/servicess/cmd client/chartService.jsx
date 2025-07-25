@@ -18,7 +18,6 @@ export async function getChartData(rpcName, params = {}) {
     mode_livraison,
     statut,
   } = params;
-
   // Construction dynamique du payload
   const payload = {};
   if (start_date) payload.p_start_date = start_date;

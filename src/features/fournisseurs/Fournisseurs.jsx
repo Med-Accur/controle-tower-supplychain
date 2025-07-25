@@ -16,7 +16,7 @@ const [open, setOpen] = useState(false);
         onClose={() => setOpen(false)}
         title="Ajouter un graphique"
       >
-      <Input placeholder="Titre du graphique" />
+      <Input label="Titre du graphique" type='date' placeholder="Titre du graphique" />
       <Button className='bg-blue-500 text-white border border-blue-500' onClick={() => setOpen(false)}>Ajouter</Button>
       </Modal>
     </div>

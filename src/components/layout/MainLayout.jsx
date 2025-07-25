@@ -17,7 +17,7 @@ export default function MainLayout() {
         <Sidebar isCollapsed={isCollapsed} />
       </aside>
       <header
-        className={`fixed top-0 ${contentLeft} right-0 h-16 bg-white shadow flex items-center px-6 z-30 transition-all duration-300`}
+        className={`fixed top-0 ${contentLeft} right-0 h-18 bg-white shadow flex items-center px-6 z-30 transition-all duration-300`}
       >
         <Header onToggleSidebar={() => setIsCollapsed((prev) => !prev)} />
       </header>

@@ -12,14 +12,12 @@ export default function UserProfile() {
 
   const menuItems = [
     { label: "Profil" },
-    { label: "Paramètres" },
     { label: "Modifier le mot de passe", onClick: () => navigate("/resetpassword") },
     { label: "Support" },
-    { label: "À propos" },
   ];
 
   return (
-    <div className="relative">
+    <div className="">
       {/* Avatar cliquable */}
       <div
         className="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer text-white font-bold text-lg"
@@ -30,22 +28,23 @@ export default function UserProfile() {
 
       {/* Menu déroulant */}
       {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
-          <div className="px-4 py-2 font-semibold border-b">{userName}</div>
-          <ul className="py-2 text-sm">
+        <div className="absolute right-5 mt-[13px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 z-60">
+          <div className="px-4 py-2 font-semibold ">{userName}</div>
+          <ul className="flex flex-col gap-1 pt-4 pb-3">
             {menuItems.map((item, index) => (
               <li
                 key={index}
                 onClick={item.onClick}
-                className={`px-4 py-1 hover:bg-gray-100 cursor-pointer ${item.onClick ? "text-blue-600" : ""}`}
+                className="px-3 py-2 hover:bg-gray-100 rounded-lg cursor-pointer"
               >
                 {item.label}
               </li>
             ))}
+            <div className=" border-t border-gray-300"/>
             <li>
               <Button
                 onClick={logout}
-                className="w-full text-left text-red-600 px-4 py-1 hover:bg-gray-100"
+                className="w-full text-left rounded-lg px-4 py-2 hover:bg-gray-100"
               >
                 Déconnexion
               </Button>
