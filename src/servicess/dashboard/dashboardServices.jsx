@@ -12,7 +12,7 @@ export async function getTable() {
   return data;
 
 }
-
+//test
 export async function getDataTable(rpcName, params = {}) {
   
   const {
