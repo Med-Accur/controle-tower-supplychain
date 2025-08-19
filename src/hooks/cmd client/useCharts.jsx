@@ -1,5 +1,5 @@
-// hooks/cmd client/useCharts.jsx
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { getChartsMeta, getChartData } from "../../servicess/cmd client/chartService";
 
 export function useCharts() {
@@ -8,7 +8,7 @@ export function useCharts() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
+  
   const fetchChartsMeta = async (module) => {
     try {
       setLoading(true);
@@ -21,14 +21,11 @@ export function useCharts() {
       setLoading(false);
     }
   };
-
-  // 📈 Récupère les données d’un graphique spécifique
+  
   const fetchChartData = async (rpcName, chartKey, params = {}) => {
     try {
       setLoading(true);
-
       const data = await getChartData(rpcName, params);
-
       setChartData((prev) => ({
         ...prev,
         [chartKey]: data,
@@ -42,11 +39,11 @@ export function useCharts() {
   };
 
   return {
-    chartsMeta,      
-    chartData,       
-    loading,        
-    error,          
-    fetchChartsMeta, 
-    fetchChartData,  
+    chartsMeta,
+    chartData,
+    loading,
+    error,
+    fetchChartsMeta,
+    fetchChartData,
   };
 }

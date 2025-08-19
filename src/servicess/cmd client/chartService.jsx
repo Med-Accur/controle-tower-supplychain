@@ -3,9 +3,9 @@ import { supabase } from "../../supabase/supabase";
 export async function getChartsMeta(module) {
   const { data, error } = await supabase
     .from("TABLE_CHART")
-    .select("*")
+    .select("nom_kpi, rpc_name, type_chart, filtre")
     .eq("module", module);
- 
+
   if (error) throw new Error("Erreur récupération charts : " + error.message);
   return data;
 }
@@ -18,17 +18,12 @@ export async function getChartData(rpcName, params = {}) {
     mode_livraison,
     statut,
   } = params;
-  // Construction dynamique du payload
+console.log("Fetching chart data with params:", params);
   const payload = {};
   if (start_date) payload.p_start_date = start_date;
   if (end_date) payload.p_end_date = end_date;
-  if (mode_livraison && mode_livraison.length > 0) {
-    payload.p_mode_livraison = mode_livraison;
-  }
-  if (statut && statut.length > 0) {
-    payload.p_statut = statut;
-  }
-
+  if (mode_livraison?.length) payload.p_mode_livraison = mode_livraison;
+  if (statut?.length) payload.p_statut = statut;
 
   const { data, error } = await supabase.rpc(rpcName, payload);
 
@@ -36,11 +31,6 @@ export async function getChartData(rpcName, params = {}) {
     console.error("Erreur appel RPC :", error.message);
     throw new Error("Erreur appel RPC : " + error.message);
   }
-
+console.log("Chart data fetched successfully:", data);
   return data;
 }
-
-
-
-
-

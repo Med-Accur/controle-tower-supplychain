@@ -31,7 +31,7 @@ export default function Select({
           {placeholder}
         </option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value} className="text-black bg-white">
+         <option key={opt.key || opt.value} value={opt.value}className="text-black bg-white">
             {opt.label}
           </option>
         ))}
