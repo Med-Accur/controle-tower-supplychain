@@ -1,12 +1,14 @@
 import { NavLink,useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import {Home,Package,Users,DollarSign,Megaphone} from "lucide-react";
+import {Home,Factory ,Users,WalletCards ,Warehouse,Store  } from "lucide-react";
 
 const menuItems = [
    { label: "Dashboard", icon: Home, path: "/dashboard" },
-   { label: "Commande Client", icon: Package, path: "/commandes" },
-   { label: "Stock", icon: Users, path: "/stock" },
-   { label: "Fournisseur", icon: DollarSign, path: "/fournisseurs" },
+   { label: "Commande Client", icon: Store , path: "/commandes" },
+   { label: "Stock", icon: Warehouse , path: "/stock" },
+   { label: "Fournisseur", icon: WalletCards , path: "/fournisseurs" },
+   { label: "Production", icon: Factory  },
+   { label: "Capacite Charge", icon: Users },
 ];
 
 
@@ -26,11 +28,11 @@ export default function Sidebar({ isCollapsed }) {
         )}
       </div>
       <div className="flex flex-col flex-1 p-4 space-y-2 overflow-auto">
-        {menuItems.map(({ label, icon: Icon, path }) => {
+        {menuItems.map(({ label, icon: Icon, path },i) => {
             const isActive = location.pathname === path;
             return (
           <NavLink
-            key={path}
+            key={i}
             to={path}
             className={
               `flex items-center gap-4 py-5 rounded-lg text-sm font-medium transition-all duration-200

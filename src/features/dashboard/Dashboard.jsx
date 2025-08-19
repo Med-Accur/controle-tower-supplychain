@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Button from "../../components/ui/Button";
 import CardWidget from "../../widgets/dashboard/CardWidget";
+import MapWidget from "../../widgets/dashboard/MapWidget";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
 import TableWidget from "../../widgets/dashboard/TableWidget";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
+import Stock from "../stock/Stock";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -35,8 +37,15 @@ export default function Dashboard() {
       })),
       ...selectedKpis.table.map((item, index) => ({
         i: `table-${item.key}`,
+        x: index,
+        y: Math.floor(index / cols) + selectedKpis.table.length,
+        w: Math.min(2, cols),
+        h: 3.1,
+      })),
+      ...selectedKpis.map.map((item, index) => ({
+        i: `map-${item.key}`,
         x: index % cols,
-        y: Math.floor(index / cols) + selectedKpis.card.length,
+        y: Math.floor(index / cols) + selectedKpis.map.length,
         w: Math.min(2, cols),
         h: 3.1,
       })),
@@ -45,14 +54,14 @@ export default function Dashboard() {
 
   const layouts = {
     lg: generateLayout(4),
-    md: generateLayout(2),
+    md: generateLayout(3),
     sm: generateLayout(1),
     xs: generateLayout(1),
   };
 
   return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4">Bienvenue sur le Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       <div className={`right-9 transition-all duration-300 ${isCollapsed ? "mr-64" : "mr-0"}`}>
         <Button
           className="bg-blue-500 text-white px-3 py-1 rounded"
@@ -89,8 +98,16 @@ export default function Dashboard() {
             <TableWidget tableInfo={[item]} />
           </div>
         ))}
-         
+
+
+        {selectedKpis.map.map((item) => (
+          <div key={`map-${item.key}`}>
+            <MapWidget mapInfo={[item]} />
+          </div>
+        ))}
       </ResponsiveGridLayout>
+
+    
      
     </div>
   );

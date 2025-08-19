@@ -8,7 +8,7 @@ export default function DashboardLayout({ isCollapsed, onSelectionChange }) {
   const [grouped, setGrouped] = useState({});
   const [activeGroup, setActiveGroup] = useState("card");
   const { kpis, fetchKpis } = useCommandes();
-  const { table, loading, error, tableData, fetchTable } = useDashboard();
+  const { table, loading, error, tableData, map, fetchTable, fetchMap } = useDashboard();
   const [checkedItems, setCheckedItems] = useState({
   card: {},
   table: {},
@@ -19,6 +19,7 @@ export default function DashboardLayout({ isCollapsed, onSelectionChange }) {
   useEffect(() => {
     fetchKpis(["cmd_client", "stock", "fournisseur"]);
     fetchTable();
+    fetchMap();
   }, []);
 
   useEffect(() => {
@@ -26,9 +27,9 @@ export default function DashboardLayout({ isCollapsed, onSelectionChange }) {
       card:  kpis,
       chart: [],
       table: table,
-      map: [],
+      map: map,
     });
-  }, [kpis, table]);
+  }, [kpis, table, map]);
 
   useEffect(() => {
   const selections = {};

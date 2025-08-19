@@ -4,7 +4,7 @@ import ChartFiltersModal from "./ChartFiltersModal";
 import Button from "../ui/Button";
 import chartConfigs from "../../config/chartConfigs";
 import { X } from "lucide-react";
-import { ListFilter, Plus } from 'lucide-react';
+import { ListFilterPlus } from 'lucide-react';
 
 const ChartRenderer = ({ rpc_name, type, kpi, onRemove }) => {
   const [filters, setFilters] = useState({});
@@ -13,25 +13,16 @@ const ChartRenderer = ({ rpc_name, type, kpi, onRemove }) => {
 
   const { chartData, fetchChartData, loading } = useCharts();
   const data = chartData?.[kpi] || [];
-
-  // 🔍 Récupération de la config depuis chartConfigs
   const cleanRpcName = rpc_name?.trim(); 
   const config = chartConfigs?.[rpc_name?.trim()];
  const chartComponent = config?.typeMap?.[type];
 
-if (!chartComponent) {
-  console.warn(`❌ Le type "${type}" n'est pas défini pour le KPI "${cleanRpcName}"`);
-}
-
-console.log("rpc_name reçu :", `"${rpc_name}"`, "après trim:", `"${rpc_name?.trim()}"`);
-
-  // ✅ Ne pas inclure xKey/yKey ici, ils sont déjà dans le composant du config
   const chartProps = {
     data,
     title: config?.title || kpi,
   };
 
-  // 🧠 Construction des paramètres dynamiques pour le backend
+  
   const buildParams = (filters) => {
     const params = {};
     if (filters.start_date) params.start_date = filters.start_date;
@@ -42,44 +33,36 @@ console.log("rpc_name reçu :", `"${rpc_name}"`, "après trim:", `"${rpc_name?.t
     }
     return params;
   };
-console.log("Clés disponibles dans chartConfigs :", Object.keys(chartConfigs));
 
   useEffect(() => {
   const newParams = buildParams(filters);
 
-  // Force fetch si data est vide au démarrage
   const shouldFetch = JSON.stringify(newParams) !== JSON.stringify(lastParams) || !data || data.length === 0;
 
   if (shouldFetch) {
     fetchChartData(cleanRpcName, kpi, newParams);
     setLastParams(newParams);
   }
-}, [filters, kpi, cleanRpcName]); // 👈 important d'ajouter les deps correctes
+}, [filters, kpi, cleanRpcName]);
 
-console.log("Component pour", cleanRpcName, "->", chartComponent);
-console.log("Données reçues :", data);
 if (!data || data.length === 0) {
   return <div className="p-4">Pas de données disponibles.</div>;
 }
-console.log("Types disponibles pour", cleanRpcName, ":", config?.typeMap && Object.keys(config.typeMap));
-console.log("Type demandé :", type);
+
 
   return (
     <div className="bg-white shadow rounded-xl p-4">
-      {/* Titre + Boutons */}
-      <div className="flex justify-between items-start mb-2">
-        <Button onClick={() => setIsDrawerOpen(true)} >
+      <div className="flex m-2 justify-end items-center  mt-3">
+      <div className="flex space-x-2">
+        <Button onClick={() => setIsDrawerOpen(true)} className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800" >
           
-          <div className="relative inline-block">
-  <ListFilter className="w-6 h-6" />
-  <Plus className="w-3 h-3 text-green-500 absolute -top-1 -right-1 bg-white rounded-full" />
-          </div> 
-         
+            <ListFilterPlus className="w-5 h-5" />Filtre
+        
         </Button>
-        {onRemove && (
+        {onRemove && ( 
           <Button
             onClick={onRemove}
-            className=" hover:text-red-700 text-xl leading-none"
+            className=" hover:text-[#A79882] text-xl leading-none"
             title="Supprimer le graphique"
           >
             <X className="w-5 h-5"/>
@@ -87,8 +70,8 @@ console.log("Type demandé :", type);
           </Button>
         )}
       </div>
-
-      {/* Affichage des états */}
+      </div>
+ 
       {loading && <p className="text-sm text-gray-500">Chargement du graphique...</p>}
 
       {!loading && chartComponent && data.length > 0 && chartComponent(chartProps)}
@@ -102,8 +85,7 @@ console.log("Type demandé :", type);
           Type de graphique non supporté pour ce KPI.
         </p>
       )}
-
-      {/* Drawer de filtres */}
+ 
       <ChartFiltersModal
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

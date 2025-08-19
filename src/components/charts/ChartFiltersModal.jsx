@@ -96,9 +96,10 @@ export default function ChartFiltersModal({ isOpen, onClose, onApply, rpc_name, 
           onClick={handleApply}
           className="w-full mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Appliquer les filtres
+          Filtrer
         </button>
       </div>
     </Modal>
   );
 }
+937

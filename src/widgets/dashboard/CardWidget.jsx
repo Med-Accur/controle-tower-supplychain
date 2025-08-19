@@ -14,7 +14,6 @@ export default function CardWidget({ kpi = [] }) {
     if (keysToFetch.length === 0) return;
 
     keysToFetch.forEach((key) => {
-      console.log("Fetching KPI:", key);
       fetchCmdKpis(key);
       fetchedKeysRef.current.add(key);
     });
