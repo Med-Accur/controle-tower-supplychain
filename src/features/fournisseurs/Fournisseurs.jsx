@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../../components/ui/Button'; 
 import Modal from '../../components/ui/Modal';
-import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
 
 export default function Fournisseurs() {
@@ -16,7 +15,16 @@ const [open, setOpen] = useState(false);
         onClose={() => setOpen(false)}
         title="Ajouter un graphique"
       >
-      <Input label="Titre du graphique" type='date' placeholder="Titre du graphique" />
+      <Select
+        label="Choisissez un fournisseur"
+        options={[
+          { label: 'Fournisseur 1', value: 'fournisseur1' },
+          { label: 'Fournisseur 2', value: 'fournisseur2' },
+          { label: 'Fournisseur 3', value: 'fournisseur3' },
+        ]}
+        required
+        placeholder="Choisir un fournisseur"
+      />
       <Button className='bg-blue-500 text-white border border-blue-500' onClick={() => setOpen(false)}>Ajouter</Button>
       </Modal>
     </div>
