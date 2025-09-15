@@ -22,9 +22,9 @@ export function useCommandes() {
   };
 
   //la fonction qui retourne les valeur de chaque kpi
-  const fetchCmdKpis = async (kpiName) => {
+  const fetchCmdKpis = async (kpiName, rpc) => {
     try {
-      const data = await getCommandeKpis(kpiName);
+      const data = await getCommandeKpis(kpiName, rpc);
       setKpiData((prev) => ({
         ...prev,
         [kpiName]: data[0]?.valeur ?? null,

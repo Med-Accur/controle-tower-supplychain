@@ -1,7 +1,7 @@
 // Importation des hooks, composants UI et configuration des graphiques
 import { useEffect } from "react";
 import { useCharts } from "../../hooks/cmd client/useCharts";
-import { X, ListFilter } from "lucide-react";
+import { X, Funnel } from "lucide-react";
 import Button from "../ui/Button";
 import chartConfigs from "../../config/chartConfigs";
 
@@ -35,7 +35,7 @@ const ChartRenderer = ({ rpc_name, type, kpi, filters, onRemove, onFilterClick }
       {/* En-tête avec bouton filtres et bouton suppression */}
       <div className="flex justify-between items-start mb-2">
         <Button onClick={onFilterClick}>
-          <ListFilter className="w-5 h-5" />
+          <Funnel className="w-5 h-5" />
         </Button>
         {onRemove && (
           <Button onClick={onRemove} className="hover:text-red-700 text-xl leading-none" title="Supprimer">

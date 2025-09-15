@@ -1,16 +1,11 @@
 import { supabase } from "../../supabase/supabase"; // Assure-toi que cette instance est bien configurée
 
 
-const url = "http://localhost:8000"
 
 export async function getTable() {
-  const res = await fetch(`${url}/api/dashboard/config`,{
-    method:"GET"
-  });
-  const data = await res.json()
-  if (!res.ok) throw new Error("Erreur récupération des tableaux");
+  const { data, error } = await supabase.from("TABLE_TABLEAUX").select("nom,filtre,key,colonnes,rpc_name");
+  if (error) throw new Error("Erreur récupération des kpi : " + error.message);
   return data;
-
 }
 //test
 export async function getDataTable(rpcName, params = {}) {

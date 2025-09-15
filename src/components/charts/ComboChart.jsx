@@ -10,11 +10,11 @@ import {
   Label
 } from "recharts";
 
-const ComboChart = ({ data, xKey, barKey, lineKey, barColor = "#82ca9d", lineColor = "#ff7300", title, xAxisLabel, yAxisLabel }) => {
+const ComboChart = ({ data, xKey, barKey, lineKey, barColor = "#82ca9d", lineColor = "#8884d8", title, xAxisLabel, yAxisLabel }) => {
   if (!Array.isArray(data) || data.length === 0) return null;
   return (
     <div className="p-4">
-      <h3 className="text-center font-bold text-lg text-blue-600 mb-2 ">{title}</h3>
+      <h3 className="text-center font-bold text-lg text-[#402363] mb-2">{title}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -27,7 +27,7 @@ const ComboChart = ({ data, xKey, barKey, lineKey, barColor = "#82ca9d", lineCol
   label={{
     value: xAxisLabel,
     position: "insideBottom",
-    offset: 8,
+    offset: 2,
   }}
 />
 

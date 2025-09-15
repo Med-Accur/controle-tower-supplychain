@@ -8,13 +8,13 @@ import ComboChart from "../components/charts/ComboChart";
 const chartConfigs = {
   get_otif: {
     typeMap: {
-      
-      donut: (props) => (
+
+      Secteurs: (props) => (
         <DonutChart
           {...props}
           dataKey="otif"
           nameKey="jour"
-          title="OTIF"
+          title="OTIF (%)"
           xAxisLabel="Jour"
           yAxisLabel="Taux OTIF (%)"
         />
@@ -23,7 +23,7 @@ const chartConfigs = {
   },
   get_cout_par_jour_traitement: {
     typeMap: {
-      line: (props) => (
+      Ligne: (props) => (
         <CustomLineChart
           {...props}
           xKey="jour"
@@ -33,7 +33,7 @@ const chartConfigs = {
           yAxisLabel="Coût (€)"
         />
       ),
-      combo: (props) => (
+      "Histogramme + ligne": (props) => (
         <ComboChart
           {...props}
           xKey="jour"
@@ -48,7 +48,7 @@ const chartConfigs = {
   },
   get_taux_annulation: {
     typeMap: {
-      donut: (props) => (
+      Secteurs: (props) => (
         <DonutChart
           {...props}
           dataKey="taux_annulation"
@@ -58,7 +58,7 @@ const chartConfigs = {
           yAxisLabel="Taux (%)"
         />
       ),
-      stackedBar: (props) => (
+      Histogramme: (props) => (
         <StackedBarChart
           {...props}
           xKey="jour"
@@ -73,7 +73,7 @@ const chartConfigs = {
   },
   get_duree_cycle_moyenne: {
   typeMap: {
-    line: (props) => (
+    Ligne: (props) => (
       <CustomLineChart
         {...props}
         xKey="jour"
@@ -88,7 +88,7 @@ const chartConfigs = {
 
   get_nb_commandes: {
     typeMap: {
-      combo: (props) => (
+      "Histogramme + ligne": (props) => (
         <ComboChart
           {...props}
           xKey="jour"
@@ -99,7 +99,7 @@ const chartConfigs = {
           yAxisLabel="Nb commandes"
         />
       ),
-      stackedBar: (props) => (
+      Histogramme: (props) => (
         <StackedBarChart
           {...props}
           xKey="jour"
@@ -114,7 +114,7 @@ const chartConfigs = {
   },
   get_taux_retards: {
     typeMap: {
-      donut: (props) => (
+      Secteurs: (props) => (
         <DonutChart
           {...props}
           dataKey="taux_retard"
@@ -129,7 +129,7 @@ const chartConfigs = {
   },
   get_avg_changelog_par_commande: {
     typeMap: {
-      line: (props) => (
+      Ligne: (props) => (
         <CustomLineChart
           {...props}
           xKey="jour"

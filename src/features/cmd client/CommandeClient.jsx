@@ -13,7 +13,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const defaultKpis = ["nb_commandes", "otif", "taux_retards", "duree_cycle_moyenne_jours"];
 
 export default function CommandeClient() {
-  const { kpis, fetchCmdKpis, fetchKpis, loading } = useCommandes();
+  const { kpis, fetchKpis, loading } = useCommandes();
   const { chartsMeta, fetchChartsMeta, fetchChartData } = useCharts();
 
   const [open, setOpen] = useState(false);
@@ -91,18 +91,19 @@ export default function CommandeClient() {
 
   return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4">Commande Client</h1>
+      <h1 className="text-2xl font-bold mb-4">Commandes clients</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <KpiCards cards={kpis} fetchCmdKpis={fetchCmdKpis} kpi={defaultKpis} />
+        {console.log("Rendering KpiCards with:", kpis)}
+        <KpiCards cards={kpis} rpc="get_kpi_cmd_clients" kpi={defaultKpis} />
       </div>
 
       <div className="flex justify-end mt-10 mb-6">
         <Button
-          className="bg-blue-500 text-white px-3 py-1 rounded"
+          className="bg-[#bfa76f] text-white px-3 py-1 rounded"
           onClick={() => setOpen(true)}
         >
-          Ajouter un Graphe
+          Ajouter un graphe
         </Button>
       </div>
 

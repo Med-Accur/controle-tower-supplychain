@@ -40,11 +40,11 @@ export default function Login() {
       <main className="w-1/2 flex items-center justify-center">
         <form onSubmit={handleLogin} className="w-96">
           <h2 className="text-center text-2xl font-bold text-neutral-800 mb-12">
-            Se Connecter
+            Se connecter
           </h2>
 
           <div className="my-2">
-            <label className="block text-xs text-neutral-500 mb-1">Email</label>
+            <label className="block text-xs text-neutral-500 mb-1">E-mail</label>
             <input
               type="email"
               value={email}
@@ -56,7 +56,7 @@ export default function Login() {
           </div>
 
           <div className="my-2">
-            <label className="block text-xs text-neutral-500 mb-1">Mot de Passe</label>
+            <label className="block text-xs text-neutral-500 mb-1">Mot de passe</label>
                <Input
                  type="password"
                  value={password}
@@ -70,11 +70,11 @@ export default function Login() {
           </div>
 
           <Button type="submit" className="w-full my-2 py-3 bg-[#341B49] text-white text-sm font-semibold rounded-md shadow-lg hover:bg-[#47275f] transition duration-300"
-            >se connecter 
+            >Se connecter 
           </Button>
 
           <p className="my-2 text-center text-xs text-neutral-700 mb-8">
-            Mot de Passe Oublié ?{' '}
+            Mot de passe oublié ?{' '}
             <Link to="/forgetpassword" className="font-bold underline text-neutral-800">
               Cliquez ici
             </Link>

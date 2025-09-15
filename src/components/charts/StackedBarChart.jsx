@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Labe
 
 const StackedBarChart = ({ data, xKey, yKeys, colors, title, xAxisLabel, yAxisLabel }) => (
   <div className="p-4">
-    <h3 className="text-center font-bold text-lg text-blue-600 mb-2">{title}</h3>
+    <h3 className="text-center font-bold text-lg text-[#402363] mb-2">{title}</h3>
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data}>
        <XAxis

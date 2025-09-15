@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import * as Icons from "lucide-react";
 import { useCommandes } from "../hooks/cmd client/useCommandes";
 
-export default function KpiCards({ cards = [], kpi }) {
-  const {kpiData, fetchCmdKpis } = useCommandes();
+export default function KpiCards({ cards = [], rpc, kpi }) {
+  const { kpiData, fetchCmdKpis } = useCommandes();
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const [selectedKpis, setSelectedKpis] = useState(kpi);
   
@@ -14,14 +14,15 @@ export default function KpiCards({ cards = [], kpi }) {
     const newKpis = [...selectedKpis];
     newKpis[index] = newKey;
     setSelectedKpis(newKpis);
-    setOpenDropdownIndex(null);     
-    fetchCmdKpis(newKey);    
+    setOpenDropdownIndex(null);
+    fetchCmdKpis(newKey, rpc);
   };
   
   
   useEffect(() => {
     selectedKpis.forEach((kpi) => {
-        fetchCmdKpis(kpi);
+      console.log("Fetching KPI for key:", kpi, "using RPC:", rpc);
+        fetchCmdKpis(kpi, rpc);
     });
   }, []);
   

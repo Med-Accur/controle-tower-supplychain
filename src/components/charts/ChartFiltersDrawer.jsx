@@ -113,7 +113,7 @@ export default function ChartFiltersDrawer({ isOpen, onClose, onApply, filterSch
         <div className="flex justify-between pt-4">
           <button
             onClick={handleApply}
-            className="w-[48%] bg-blue-600 text-white py-2 rounded"
+            className="w-[48%] bg-[#bfa76f] text-white py-2 rounded"
           >
             Appliquer
           </button>

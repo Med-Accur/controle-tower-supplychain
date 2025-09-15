@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
-const COLORS = ['#8884d8', '#FF8042'];
+const COLORS = ['#82ca9d', '#a0aec0'];
 
 const DonutChart = ({ data, dataKey, nameKey, title }) => {
   // On suppose que data contient UNE seule entrée avec un pourcentage
@@ -12,7 +12,7 @@ const DonutChart = ({ data, dataKey, nameKey, title }) => {
 
   return (
     <div className="p-4">
-      <h3 className="text-center font-bold text-lg text-blue-600 mb-2">{title}</h3>
+      <h3 className="text-center font-bold text-lg text-[#402363] mb-2">{title}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

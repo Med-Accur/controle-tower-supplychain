@@ -14,8 +14,7 @@ export function useDashboard() {
         setLoading(true);
           try {
              const data = await getTable();
-             setTable(data.tables.data);
-             setMap(data.maps.data);
+             setTable(data);
            } catch (err) {
            setError(err.message);
            } finally {
@@ -40,7 +39,7 @@ export function useDashboard() {
         setLoading(true);
           try {
              const data = await getMap();
-            
+             setMap(data);
            } catch (err) {
            setError(err.message);
            } finally {

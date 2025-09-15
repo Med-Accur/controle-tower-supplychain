@@ -1,14 +1,15 @@
 import { NavLink,useLocation } from "react-router-dom";
+import logo2 from "../../assets/logo2.png";
 import logo from "../../assets/logo.png";
 import {Home,Factory ,Users,WalletCards ,Warehouse,Store  } from "lucide-react";
 
 const menuItems = [
-   { label: "Dashboard", icon: Home, path: "/dashboard" },
-   { label: "Commande Client", icon: Store , path: "/commandes" },
-   { label: "Stock", icon: Warehouse , path: "/stock" },
-   { label: "Fournisseur", icon: WalletCards , path: "/fournisseurs" },
+   { label: "Accueil", icon: Home, path: "/dashboard" },
+   { label: "Commandes clients", icon: Store , path: "/commandes" },
+   { label: "Stocks", icon: Warehouse , path: "/stock" },
+   { label: "Fournisseurs", icon: WalletCards , path: "/fournisseurs" },
    { label: "Production", icon: Factory  },
-   { label: "Capacite Charge", icon: Users },
+   { label: "Capacité de charge", icon: Users },
 ];
 
 
@@ -22,7 +23,7 @@ export default function Sidebar({ isCollapsed }) {
     >
       <div className="flex items-center justify-center h-18 border-b border-gray-200">
         {!isCollapsed ? (
-          <h2 className="text-md font-bold text-[#bfa76f]">Contole Tower Supplychain</h2>
+          <img src={logo2} alt="Logo" className="p-4"/>
         ) : (
             <img src={logo} alt="Logo" className="h-10 w-10"/>
         )}

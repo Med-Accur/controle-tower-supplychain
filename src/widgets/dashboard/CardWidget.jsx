@@ -7,10 +7,10 @@ export default function CardWidget({ kpi = [] }) {
   const { kpiData, fetchCmdKpis } = useCommandes();
   const fetchedKeysRef = useRef(new Set());
 
-
+  console.log("KPI prop in CardWidget:", kpi);
   useEffect(() => {
-    const keysToFetch = kpi.map((item) => item.key).filter((key) => !fetchedKeysRef.current.has(key));
-    
+    const keysToFetch = kpi.map((item) => item).filter((item) => !fetchedKeysRef.current.has(item.key,item.rpc_name));
+    console.log("Keys to fetch:", keysToFetch);
     if (keysToFetch.length === 0) return;
 
     keysToFetch.forEach((key) => {

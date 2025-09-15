@@ -78,7 +78,7 @@ console.log("Options KPI :", chartsMeta.map(kpi => kpi.nom_kpi));
             label: kpi.nom_kpi,
             value: kpi.nom_kpi,
           }))}
-          placeholder="Choisir KPI"
+          placeholder="Sélectionner"
         />
 
         <SelectField
@@ -93,11 +93,11 @@ console.log("Options KPI :", chartsMeta.map(kpi => kpi.nom_kpi));
                 value: type,
               })) || []
           }
-          placeholder="Choisir Chart"
+          placeholder="Sélectionner"
         />
 
         <Button
-          className="bg-blue-500 text-white px-3 py-1 rounded"
+          className="bg-[#bfa76f] text-white px-3 py-1 rounded"
           onClick={handleGenerate}
         >
           Générer

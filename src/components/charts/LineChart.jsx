@@ -2,7 +2,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Label } fr
 
 const CustomLineChart = ({ data, xKey, yKey, color = "#8884d8", title, xAxisLabel, yAxisLabel }) => (
   <div className="p-4">
-    <h3 className="text-center font-bold text-lg text-blue-600 mb-2 ">{title}</h3>
+    <h3 className="text-center font-bold text-lg text-[#402363] mb-2">{title}</h3>
     <ResponsiveContainer width="100%" height={300}>
       <LineChart data={data}>
         <XAxis
