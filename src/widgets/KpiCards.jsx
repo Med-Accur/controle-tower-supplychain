@@ -3,10 +3,11 @@ import Card from "../components/ui/Card";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Icons from "lucide-react";
-import { useCommandes } from "../hooks/cmd client/useCommandes";
+import { useDashboard } from "../hooks/dashboard/useDashboard";
 
-export default function KpiCards({ cards = [], rpc, kpi }) {
-  const { kpiData, fetchCmdKpis } = useCommandes();
+export default function KpiCards({ cards = [], kpi }) {
+  console.log("KpiCards props:", { cards, kpi });
+  const { table, fetchDataWidget} = useDashboard();
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const [selectedKpis, setSelectedKpis] = useState(kpi);
   
@@ -15,20 +16,19 @@ export default function KpiCards({ cards = [], rpc, kpi }) {
     newKpis[index] = newKey;
     setSelectedKpis(newKpis);
     setOpenDropdownIndex(null);
-    fetchCmdKpis(newKey, rpc);
+    fetchDataWidget(newKey);
   };
   
   
   useEffect(() => {
     selectedKpis.forEach((kpi) => {
-      console.log("Fetching KPI for key:", kpi, "using RPC:", rpc);
-        fetchCmdKpis(kpi, rpc);
+        fetchDataWidget(kpi);
     });
   }, []);
-  
   return (
     <>
-      {selectedKpis.map((key, index) => {
+      {table && selectedKpis.map((key, index) => {
+       
         const kpi = cards.find(k => k.key === key);
         const Icon = Icons[kpi.icon];
         return (
@@ -36,11 +36,11 @@ export default function KpiCards({ cards = [], rpc, kpi }) {
                 <Card
                     className="bg-white"
                     title={kpi.nom}
-                    value={kpiData[kpi.key]}
+                    value={table[key]}
                     unit={kpi.unit}
-                    icon={Icon ? <Icon className="w-6 h-6 text-[#A79882]" /> : null}
+                    icon={<Icon className="w-6 h-6 text-[#A79882]" />}
                 />
-                <Button className="absolute top-4 right-4 text-gray-400 hover:text-[#A79882] transition" onClick={() =>setOpenDropdownIndex(openDropdownIndex === index ? null : index)}>
+                <Button className="absolute top-4 right-4 text-gray-400 hover:text-[#A79882] transition" onClick={() => setOpenDropdownIndex(openDropdownIndex === index ? null : index)}>
                     <ChevronDown className={`w-5 h-5 transform transition-transform duration-300 ${openDropdownIndex === index ? 'rotate-180' : ''}`} />
                 </Button>
                 {openDropdownIndex === index && (

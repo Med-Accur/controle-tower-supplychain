@@ -8,8 +8,8 @@ const menuItems = [
    { label: "Commandes clients", icon: Store , path: "/commandes" },
    { label: "Stocks", icon: Warehouse , path: "/stock" },
    { label: "Fournisseurs", icon: WalletCards , path: "/fournisseurs" },
-   { label: "Production", icon: Factory  },
-   { label: "Capacité de charge", icon: Users },
+   { label: "Production", icon: Factory , path: "/production" },
+   { label: "Capacité de charge", icon: Users , path: "/capacite-charge" },
 ];
 
 

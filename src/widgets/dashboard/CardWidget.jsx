@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import * as Icons from "lucide-react";
-import Card from "../../components/ui/Card";
-import { useCommandes } from "../../hooks/cmd client/useCommandes";
+import Card from "../../components/ui/Card"
+import { useDashboard } from "../../hooks/dashboard/useDashboard";
 
 export default function CardWidget({ kpi = [] }) {
-  const { kpiData, fetchCmdKpis } = useCommandes();
+  const { table, fetchDataWidget } = useDashboard();
   const fetchedKeysRef = useRef(new Set());
 
   console.log("KPI prop in CardWidget:", kpi);
@@ -13,9 +13,10 @@ export default function CardWidget({ kpi = [] }) {
     console.log("Keys to fetch:", keysToFetch);
     if (keysToFetch.length === 0) return;
 
-    keysToFetch.forEach((key) => {
-      fetchCmdKpis(key);
-      fetchedKeysRef.current.add(key);
+    keysToFetch.forEach((k) => {
+      console.log("Fetching data for key:", k.key);
+      fetchDataWidget(k.key);
+      fetchedKeysRef.current.add(k.key);
     });
   }, [kpi]);
 
@@ -29,7 +30,7 @@ export default function CardWidget({ kpi = [] }) {
             <Card
               className="bg-white"
               title={item.nom}
-              value={kpiData[item.key]}
+              value={table[item.key]}
               unit={item.unit}
               icon={Icon ? <Icon className="w-6 h-6 text-[#A79882]" /> : null}
             />

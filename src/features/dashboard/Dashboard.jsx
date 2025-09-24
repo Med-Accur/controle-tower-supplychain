@@ -13,7 +13,6 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard() {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { fetchTable } = useDashboard();
   const [selectedKpis, setSelectedKpis] = useState({
     card: [],
     table: [],
@@ -21,9 +20,6 @@ export default function Dashboard() {
     map: [],
   });
 
-  useEffect(() => {
-    fetchTable();
-  }, []);
 
    
   const generateLayout = (cols) => {
@@ -61,13 +57,13 @@ export default function Dashboard() {
 
   return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4">Mes tableaux de bord</h1>
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       <div className={`right-9 transition-all duration-300 ${isCollapsed ? "mr-64" : "mr-0"}`}>
         <Button
-          className="bg-[#bfa76f] text-white px-3 py-1 rounded"
+          className="bg-blue-500 text-white px-3 py-1 rounded"
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
-          Ajouter widget
+          Ajouter Widget
         </Button>
       </div>
 

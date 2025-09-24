@@ -10,7 +10,6 @@ export async function getKpi(kpi) {
 
 
 export async function getCommandeKpis(kpiName,rpc) {
-  console.log("Fetching KPI:", kpiName, "using RPC:", rpc);
   const { data, error } = await supabase.rpc(rpc,{
     kpi_name: kpiName
   });

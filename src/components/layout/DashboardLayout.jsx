@@ -2,34 +2,29 @@ import { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import {useCommandes} from "../../hooks/cmd client/useCommandes";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
-
+import { useAuth } from "../../context/AuthContext";
 
 export default function DashboardLayout({ isCollapsed, onSelectionChange }) {
   const [grouped, setGrouped] = useState({});
   const [activeGroup, setActiveGroup] = useState("card");
-  const { kpis, fetchKpis } = useCommandes();
-  const { table, loading, error, tableData, map, fetchTable, fetchMap } = useDashboard();
+  const { meData } = useAuth();
   const [checkedItems, setCheckedItems] = useState({
   card: {},
   table: {},
   chart: {},
   map: {},
 });
-  
   useEffect(() => {
-    fetchKpis(["cmd_client", "stock", "fournisseur"]);
-    fetchTable();
-    fetchMap();
   }, []);
 
   useEffect(() => {
     setGrouped({
-      card:  kpis,
+      card:  meData?.kpi,
       chart: [],
-      table: table,
-      map: map,
+      table: meData?.table,
+      map: meData?.maps,
     });
-  }, [kpis, table, map]);
+  }, [meData]);
 
   useEffect(() => {
   const selections = {};
@@ -57,9 +52,8 @@ export default function DashboardLayout({ isCollapsed, onSelectionChange }) {
 };
 
 
-
   if (!isCollapsed) return null;
-
+  
   return (
     <div className="fixed z-20 w-72 top-18 right-0 h-screen flex flex-col bg-white border-l border-gray-200 transition-width duration-500">
     <nav >

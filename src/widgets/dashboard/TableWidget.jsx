@@ -6,19 +6,15 @@ import Select from "../../components/ui/Select";
 
 export default function TableWidget({ tableInfo = [] }) {
   const [t, setT] = useState(null);
-  const { tableData, fetchDataTable } = useDashboard();
-  console.log("tableData", tableData)
-
-  console.log("tableInfo", tableInfo)
+  const { table, fetchDataWidget } = useDashboard();
   useEffect(() => {
      setT(tableInfo[0]?.rpc_name);
     if (t) {
-        fetchDataTable(t);
+        fetchDataWidget(t);
     }
   }, [t]);
 
-console.log("t", t)
-   const rows = (tableData?.[tableInfo[0]?.rpc_name] || []).map((row, index) => ({
+   const rows = (table?.[tableInfo[0]?.rpc_name] || []).map((row, index) => ({
   ...row,
   _rowId: index, // clé unique générée
 }));
@@ -26,16 +22,17 @@ const columnLabels = tableInfo[0]?.colonnes.map(col => ({
   field: col.field,          
   headerName: col.label, 
 }));
-console.log("columnLabels", columnLabels)
+
+
   return (
     <>
  
-    {tableData && tableInfo[0]?.colonnes.length > 0 && (
+    {table && tableInfo[0]?.colonnes.length > 0 && (
      <div className="overflow-auto bg-white rounded-2xl border border-[#E5E7EB] bg-[#F9FAFB] p-5 shadow-md md:p-6 cursor-move handle">
   <Box className="no-drag" sx={{ height: 400, width: "100%" }}>
     <DataGrid
       key={(row) => row._rowId}
-      rows={rows}
+      rows={rows || []}
       columns={columnLabels || []}
       pageSize={5}
       rowsPerPageOptions={[5]}

@@ -1,32 +1,24 @@
-import React, { useState } from 'react';
-import Button from '../../components/ui/Button'; 
-import Modal from '../../components/ui/Modal';
-import Select from '../../components/ui/Select';
+import React from "react";
+import KpiCards from "../../widgets/KpiCards";
+import { useAuth } from "../../context/AuthContext";
+import "react-grid-layout/css/styles.css";
+
+const defaultKpis = ["kpi_sup_on_time_rate", "kpi_sup_quality_nonconform_rate", "kpi_sup_return_rate", "kpi_sup_avg_lead_time_days"];
 
 export default function Fournisseurs() {
-const [open, setOpen] = useState(false);
-  return (
-    <div className='px-10'>
-      <h1 className=" text-2xl font-bold">Bienvenue sur le Fournisseurs</h1>
-       <Button className='bg-blue-500 text-white border border-blue-500' onClick={() => setOpen(true)}>Ouvrir le Modal</Button>
+  const { meData } = useAuth();
+  const { chart, kpi } = meData || {};
 
-      <Modal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        title="Ajouter un graphique"
-      >
-      <Select
-        label="Choisissez un fournisseur"
-        options={[
-          { label: 'Fournisseur 1', value: 'fournisseur1' },
-          { label: 'Fournisseur 2', value: 'fournisseur2' },
-          { label: 'Fournisseur 3', value: 'fournisseur3' },
-        ]}
-        required
-        placeholder="Choisir un fournisseur"
-      />
-      <Button className='bg-blue-500 text-white border border-blue-500' onClick={() => setOpen(false)}>Ajouter</Button>
-      </Modal>
+  const kpicmd = kpi.filter(k => k.module === "fournisseur")
+
+  return (
+    <div className="px-10 py-6">
+      <h1 className="text-2xl font-bold mb-4">Fournisseurs</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <KpiCards cards={kpicmd} kpi={defaultKpis} />
+      </div>
+
     </div>
   );
 }

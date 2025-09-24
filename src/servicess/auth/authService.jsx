@@ -1,27 +1,16 @@
-import { supabase } from "../../supabase/supabase"; // Assure-toi que cette instance est bien configurée
+import api from "../../api/axios";
 
+// Connexion
 export async function signIn(email, password) {
-  return await supabase.auth.signInWithPassword({ email, password });
+  const {data} = await api.post("/api/auth/login", { email, password });
+  return data; 
 }
 
+
+// Déconnexion
 export async function signOut() {
-  return await supabase.auth.signOut();
+  const {data} = await api.get("/api/auth/logout");
+  return data;
 }
 
-export async function resetPassword(newPassword) {
-  return await supabase.auth.updateUser({ password: newPassword });
-}
 
-export async function sendResetEmail(email) {
-  return await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: import.meta.env.VITE_SUPABASE_REDIRECT_URL,
-  });
-}
-
-export async function getCurrentSession() {
-  return await supabase.auth.getSession();
-}
-
-export function onAuthChange(callback) {
-  return supabase.auth.onAuthStateChange(callback);
-}

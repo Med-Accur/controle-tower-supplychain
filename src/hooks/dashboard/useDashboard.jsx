@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { getTable,getMap, getDataMap, getDataTable } from "../../servicess/dashboard/dashboardServices";
+import {  getDataWidget, getWidget } from "../../servicess/dashboard/dashboardServices";
 
 
 export function useDashboard() {
   const [table, setTable] = useState([]);
-  const [map, setMap] = useState([]);
-  const [mapData, setMapData] = useState({});
-  const [tableData, setTableData] = useState({});
+  const [widget, setWidget] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchTable = async () => {
+ const  fetchWidget = async () => {
         setLoading(true);
           try {
-             const data = await getTable();
-             setTable(data);
+             const data = await getWidget();
+             setWidget(data);
            } catch (err) {
            setError(err.message);
            } finally {
@@ -22,36 +20,14 @@ export function useDashboard() {
         }
     };
 
-    const fetchDataTable = async (rpcName, params = {}) => {
+    const fetchDataWidget = async (rpcName) => {
         setLoading(true);
           try {
-          const data = await getDataTable(rpcName, params);
-          setTableData((prev) => ({
-            ...prev,
-            [rpcName]: data ?? null,
-          }));
-        } catch (err) {
-          console.error(err.message);
-        }
-      };
+           const rawData = await getDataWidget(rpcName);
 
-      const fetchMap = async () => {
-        setLoading(true);
-          try {
-             const data = await getMap();
-             setMap(data);
-           } catch (err) {
-           setError(err.message);
-           } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchDataMap = async (rpcName, params = {}) => {
-        setLoading(true);
-          try {
-          const data = await getDataMap(rpcName, params);
-          setMapData((prev) => ({
+    // 🔑 on déballe ici
+    const data = rawData?.[rpcName]?.[rpcName] ?? rawData?.[rpcName] ?? rawData;
+          setTable((prev) => ({
             ...prev,
             [rpcName]: data ?? null,
           }));
@@ -61,15 +37,9 @@ export function useDashboard() {
       };
 
     return {
+    widget,
     table,
-    loading,
-    error,
-    tableData,
-    map,
-    mapData,
-    fetchTable,
-    fetchDataTable,
-    fetchMap,
-    fetchDataMap
+    fetchWidget,
+    fetchDataWidget
   };
 }

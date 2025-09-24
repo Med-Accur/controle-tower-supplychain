@@ -7,24 +7,27 @@ import ChartRenderer from "../../components/charts/ChartRenderer";
 import AddChartModal from "../../widgets/AddChartModal";
 import ChartFiltersDrawer from "../../components/charts/ChartFiltersDrawer";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import { useAuth } from "../../context/AuthContext";
 import "react-grid-layout/css/styles.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-const defaultKpis = ["nb_commandes", "otif", "taux_retards", "duree_cycle_moyenne_jours"];
+const defaultKpis = ["kpi_nb_commandes", "kpi_otif", "kpi_taux_retards", "kpi_duree_cycle_moyenne_jours"];
 
 export default function CommandeClient() {
-  const { kpis, fetchKpis, loading } = useCommandes();
+  const { meData } = useAuth();
+  const { chart, kpi } = meData || {};
   const { chartsMeta, fetchChartsMeta, fetchChartData } = useCharts();
-
   const [open, setOpen] = useState(false);
   const [generatedCharts, setGeneratedCharts] = useState([]);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [selectedChartForFilters, setSelectedChartForFilters] = useState(null); // { chartIndex, chartMeta }
 
   useEffect(() => {
-    fetchKpis(["cmd_client"]);
     fetchChartsMeta("cmd_client");
   }, []);
+
+  const kpicmd = kpi.filter(k => k.module === "cmd_client")
+
 
   const handleGenerate = ({ kpi, chartType, rpc_name }) => {
     const chartFilters = {};
@@ -87,15 +90,13 @@ export default function CommandeClient() {
     xs: generateLayout(1),
   };
 
-  if (loading) return <div className="p-6">Chargement...</div>;
 
   return (
     <div className="px-10 py-6">
       <h1 className="text-2xl font-bold mb-4">Commandes clients</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {console.log("Rendering KpiCards with:", kpis)}
-        <KpiCards cards={kpis} rpc="get_kpi_cmd_clients" kpi={defaultKpis} />
+        <KpiCards cards={kpicmd} kpi={defaultKpis} />
       </div>
 
       <div className="flex justify-end mt-10 mb-6">
