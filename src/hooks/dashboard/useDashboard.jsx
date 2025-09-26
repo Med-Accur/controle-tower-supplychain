@@ -23,17 +23,16 @@ export function useDashboard() {
     const fetchDataWidget = async (rpcName) => {
         setLoading(true);
           try {
-           const rawData = await getDataWidget(rpcName);
-
-    // 🔑 on déballe ici
-    const data = rawData?.[rpcName]?.[rpcName] ?? rawData?.[rpcName] ?? rawData;
-          setTable((prev) => ({
-            ...prev,
-            [rpcName]: data ?? null,
-          }));
-        } catch (err) {
-          console.error(err.message);
-        }
+            const rawData = await getDataWidget(rpcName);
+            const dataRaw = rawData?.[rpcName] ?? rawData ?? null;
+            const data = (dataRaw && dataRaw[rpcName] !== undefined) ? dataRaw[rpcName] : dataRaw;
+            setTable((prev) => ({
+              ...prev,
+              [rpcName]: data,
+            }));
+          } catch (err) {
+            console.error(err.message);
+          }
       };
 
     return {
