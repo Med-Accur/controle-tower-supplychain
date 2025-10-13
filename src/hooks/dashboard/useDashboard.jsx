@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  getDataWidget, getWidget } from "../../servicess/dashboard/dashboardServices";
+import {  getDataWidget, getWidget, postWidget } from "../../servicess/dashboard/dashboardServices";
 
 
 export function useDashboard() {
@@ -20,10 +20,10 @@ export function useDashboard() {
         }
     };
 
-    const fetchDataWidget = async (rpcName) => {
+    const fetchDataWidget = async (rpcName, filters) => {
         setLoading(true);
           try {
-            const rawData = await getDataWidget(rpcName);
+            const rawData = await getDataWidget(rpcName, filters);
             const dataRaw = rawData?.[rpcName] ?? rawData ?? null;
             const data = (dataRaw && dataRaw[rpcName] !== undefined) ? dataRaw[rpcName] : dataRaw;
             setTable((prev) => ({
@@ -35,9 +35,21 @@ export function useDashboard() {
           }
       };
 
+    const  saveWidget = async (widget) => {
+        setLoading(true);
+          try {
+             const data = await postWidget(widget);
+           } catch (err) {
+           setError(err.message);
+           } finally {
+            setLoading(false);
+        }
+    };
+
     return {
     widget,
     table,
+    saveWidget,
     fetchWidget,
     fetchDataWidget
   };

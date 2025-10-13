@@ -1,160 +1,102 @@
-import { useEffect, useState } from "react";
-import { useCommandes } from "../../hooks/cmd client/useCommandes";
-import { useCharts } from "../../hooks/cmd client/useCharts";
+import { useState } from "react";
+import ChartWidget from "../../widgets/dashboard/ChartWidget";
+import ChartLayout from "../../components/layout/ChartLayout";
 import Button from "../../components/ui/Button";
 import KpiCards from "../../widgets/KpiCards";
-import ChartRenderer from "../../components/charts/ChartRenderer";
-import AddChartModal from "../../widgets/AddChartModal";
-import ChartFiltersDrawer from "../../components/charts/ChartFiltersDrawer";
-import { Responsive, WidthProvider } from "react-grid-layout";
 import { useAuth } from "../../context/AuthContext";
+import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-const defaultKpis = ["kpi_nb_commandes", "kpi_otif", "kpi_taux_retards", "kpi_duree_cycle_moyenne_jours"];
+const defaultKpis = [
+  "kpi_nb_commandes",
+  "kpi_otif",
+  "kpi_taux_retards",
+  "kpi_duree_cycle_moyenne_jours",
+];
 
 export default function CommandeClient() {
   const { meData } = useAuth();
   const { chart, kpi } = meData || {};
-  const { chartsMeta, fetchChartsMeta, fetchChartData } = useCharts();
-  const [open, setOpen] = useState(false);
-  const [generatedCharts, setGeneratedCharts] = useState([]);
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [selectedChartForFilters, setSelectedChartForFilters] = useState(null); // { chartIndex, chartMeta }
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [selectedKpis, setSelectedKpis] = useState({ chart: [] });
 
-  useEffect(() => {
-    fetchChartsMeta("cmd_client");
-  }, []);
+  // Générer un layout flexible
+ const generateLayout = (cols) => {
+  const itemWidth = Math.max(1, Math.floor(cols / 2)); // largeur par défaut
+  return selectedKpis.chart.map((item, index) => {
+    const x = (index * itemWidth) % cols;  // placement horizontal respectant w
+    const y = Math.floor((index * itemWidth) / cols); // placement vertical
 
-  const kpicmd = kpi.filter(k => k.module === "cmd_client")
+    return {
+      i: `chart-${item.key}`,
+      x,
+      y,
+      w: itemWidth,
+      h: 2.2, // hauteur fixe
+    };
+  });
+};
 
 
-  const handleGenerate = ({ kpi, chartType, rpc_name }) => {
-    const chartFilters = {};
-    const chartMeta = chartsMeta.find((m) => m.rpc_name === rpc_name);
-    try {
-      const schema = typeof chartMeta.filtre === "string"
-        ? JSON.parse(chartMeta.filtre)
-        : chartMeta.filtre || [];
-
-      schema.forEach(f => {
-        chartFilters[f.label] = f.type === "select" ? [] : "";
-      });
-    } catch (err) {
-      console.error("Erreur parsing filtres initiaux :", err);
-    }
-
-    fetchChartData(rpc_name, kpi, chartFilters);
-    setGeneratedCharts(prev => [
-      ...prev,
-      { type: chartType, kpi, rpc_name, filters: chartFilters }
-    ]);
-  };
-
-  const handleOpenDrawer = (meta, index) => {
-    setSelectedChartForFilters({ chartMeta: meta, chartIndex: index });
-    setDrawerOpen(true);
-  };
-
-  const handleApplyFilters = (newFilters) => {
-    if (!selectedChartForFilters) return;
-
-    const index = selectedChartForFilters.chartIndex;
-    const updatedCharts = [...generatedCharts];
-
-    updatedCharts[index].filters = newFilters;
-
-    setGeneratedCharts(updatedCharts);
-    fetchChartData(
-      updatedCharts[index].rpc_name,
-      updatedCharts[index].kpi,
-      newFilters
-    );
-
-   
-  };
-
-  const generateLayout = (cols) =>
-    generatedCharts.map((_, index) => ({
-      i: `chart-${index}`,
-      x: index % cols,
-      y: Math.floor(index / cols),
-      w: 1,
-      h: 2,
-    }));
-
+  // Layouts responsives
   const layouts = {
-    lg: generateLayout(2),
-    md: generateLayout(2),
-    sm: generateLayout(1),
+    lg: generateLayout(4), // Desktop : 4 colonnes
+    md: generateLayout(2), // Tablette : 2 colonnes
+    sm: generateLayout(1), // Mobile : 1 colonne
     xs: generateLayout(1),
   };
 
+  const kpicmd = kpi.filter((k) => k.module === "cmd_client");
 
   return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4">Commandes clients</h1>
+      <h1 className="text-2xl font-bold mb-4">Commande client</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <KpiCards cards={kpicmd} kpi={defaultKpis} />
       </div>
 
-      <div className="flex justify-end mt-10 mb-6">
-        <Button
-          className="bg-[#bfa76f] text-white px-3 py-1 rounded"
-          onClick={() => setOpen(true)}
-        >
-          Ajouter un graphe
-        </Button>
-      </div>
+      {/* Sélecteur de charts */}
+      <ChartLayout
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+        onSelectionChange={setSelectedKpis}
+      />
+
+      {/* Bouton Ajouter Widget */}
+      <Button
+        className="bg-[#bfa76f] text-white p-2 rounded mb-6"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
+        Ajouter Widget
+      </Button>
+
 
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
-        breakpoints={{ lg: 120, md: 99, sm: 76, xs: 48 }}
-        cols={{ lg: 2, md: 2, sm: 1, xs: 1 }}
-        rowHeight={260}
-        margin={[20, 10]}
-        isResizable={false}
-        isDraggable={true}
-      >
-        {generatedCharts.map((chart, index) => {
-          const chartMeta = chartsMeta.find((m) => m.rpc_name === chart.rpc_name);
-          return (
-            <div key={`chart-${index}`}>
-              <ChartRenderer
-                rpc_name={chart.rpc_name}
-                type={chart.type}
-                kpi={chart.kpi}
-                filters={chart.filters}
-                onRemove={() =>
-                  setGeneratedCharts((prev) => prev.filter((_, i) => i !== index))
-                }
-                chartMeta={chartMeta}
-                onFilterClick={() => handleOpenDrawer(chartMeta, index)}
-              />
-            </div>
-          );
-        })}
-      </ResponsiveGridLayout>
-
-      <AddChartModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        chartsMeta={chartsMeta}
-        onGenerate={handleGenerate}
-      />
-
-      <ChartFiltersDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        onApply={handleApplyFilters}
-        initialFilters={selectedChartForFilters?.chartIndex != null
-          ? generatedCharts[selectedChartForFilters.chartIndex]?.filters || {}
-          : {}
-        }
-        filterSchema={selectedChartForFilters?.chartMeta?.filtre || []}
-      />
-    </div>
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+        cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
+        isResizable={false}  
+        isDraggable={true} 
+        compactType="vertical"
+         draggableHandle=".drag-handle"
+>
+  {selectedKpis &&
+    selectedKpis.chart.map((item) => (
+      <div key={`chart-${item.key}`} className="bg-white rounded shadow rounded-2xl border border-[#D6D6D6]">
+        {/* Header = zone de drag */}
+        <div className="drag-handle p-2 cursor-move bg-[#f0ede5] rounded-t-2xl"/>
+        
+        {/* Contenu = non draggable */}
+        <div className="no-drag">
+          <ChartWidget tableInfo={[item]} />
+        </div>
+      </div>
+    ))}
+</ResponsiveGridLayout>
+      </div>
   );
 }

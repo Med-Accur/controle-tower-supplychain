@@ -7,14 +7,11 @@ export default function CardWidget({ kpi = [] }) {
   const { table, fetchDataWidget } = useDashboard();
   const fetchedKeysRef = useRef(new Set());
 
-  console.log("KPI prop in CardWidget:", kpi);
   useEffect(() => {
     const keysToFetch = kpi.map((item) => item).filter((item) => !fetchedKeysRef.current.has(item.key,item.rpc_name));
-    console.log("Keys to fetch:", keysToFetch);
+   
     if (keysToFetch.length === 0) return;
-
     keysToFetch.forEach((k) => {
-      console.log("Fetching data for key:", k.key);
       fetchDataWidget(k.key);
       fetchedKeysRef.current.add(k.key);
     });

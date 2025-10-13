@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Card({
   title,
-  value,
+  value = "N/A",
   unit,
   icon = null,
   className = "",

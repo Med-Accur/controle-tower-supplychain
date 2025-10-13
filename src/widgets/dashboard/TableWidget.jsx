@@ -2,9 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
-import Select from "../../components/ui/Select";
 
 export default function TableWidget({ tableInfo = [] }) {
+  console.log("Table info:", tableInfo);
   const [t, setT] = useState(null);
   const { table, fetchDataWidget } = useDashboard();
   useEffect(() => {

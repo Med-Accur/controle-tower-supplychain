@@ -1,0 +1,77 @@
+presentation
+Bonjour à tous,
+
+Je m’appelle Mohammed Amine Ouarraki, étudiant en E4 Développement Web et Mobile.
+
+Aujourd’hui, j’ai le plaisir de vous présenter ma soutenance de stage alterné, que j’ai effectuée au sein de l’entreprise AccurConsulting, sous la tutelle de Monsieur Taha Chelyah.
+
+
+----------------------------------------------------------------------------------------------------
+Je commencerai par la présentation de l’entreprise AccurConsulting,
+2️⃣ Ensuite, je parlerai du contexte de mon stage ,
+3️⃣ Puis, je présenterai les choix technologiques utilisés dans le projet,
+4️⃣ Je détaillerai ensuite les missions que j’ai réalisées durant mon stage,
+5️⃣ Je ferai une courte démonstration de l’application développée,
+6️⃣ J’aborderai ensuite les axes d’amélioration
+----------------------------------------------------------------------------------------------------
+AccurConsulting est un cabinet de conseil spécialisé dans la transformation digitale de la Supply Chain.
+L’entreprise accompagne principalement les TPE, PME dans l’optimisation de leur performance opérationnelle grâce à la digitalisation, l’automatisation, et le pilotage des processus métiers.
+
+Ce qui fait la force d’AccurConsulting, c’est son approche complète,
+----------------------------------------------------------------------------------------------------
+Le besoin principal identifié au début du stage était de intégrer un ERP complet dans une environnement cloud
+
+À partir de ce besoin, plusieurs objectifs ont été définis :
+
+• D’abord, personnaliser les documents de facturation de l’ERP à l’aide de BIRT Designer, afin de les adapter aux besoins spécifiques des clients.
+
+• Ensuite, automatiser la migration des données clients, qui se faisait auparavant manuellement à partir de fichiers Excel.
+
+• Et enfin, développer une application appelée Control Tower SupplyChain, permettant de visualiser en temps réel les indicateurs de performance (KPIs) liés à la Supply Chain.
+----------------------------------------------------------------------------------------------------
+Pour mener à bien l’ensemble de ces missions, plusieurs technologies modernes ont été choisies, chacune répondant à un besoin bien précis du projet
+tout d’abord, l’ERP open source Axelor.
+C’est une solution flexible et modulaire, qui permet de centraliser la gestion des processus métiers tels que la facturation, les commandes, les produits et les stocks
+
+ensuite Birt designr est un outil de reporting intégré à Eclipse Il permet de concevoir des rapports interactifs et graphiques à partir de différentes sources de données, comme des bases SQL ou des fichiers XML
+
+Make est une plateforme d’automatisation low-code qui permet de connecter différentes applications et services pour automatiser des workflows.
+
+React pour la partie front-end, afin de créer une interface utilisateur fluide, réactive et modulaire
+
+
+supabase un outil qui fournit un backend complet prêt à l’emploi pour les applications Elle inclut une base de données PostgreSQL, une authentification, et offre aussi l'implementation du logique metier
+
+----------------------------------------------------------------------------------------------------
+Ma première mission a été de déployer l’ERP open source Axelor sur Google Cloud Platform (GCP) afin de créer un démonstrateur en ligne utilisable par l’équipe et les clients.
+J’ai configuré une infrastructure sécurisée, installé les prérequis, déployé Axelor et rédigé une documentation technique complète
+
+Ensuite, j’ai travaillé sur la personnalisation des modèles de factures générés par Axelor.
+À l’aide de BIRT Designer, j’ai modifié les fichiers .rptdesign pour adapter la mise en page et ajouter des champs dynamiques tels que le nom du client, la TVA ou le montant total.
+J’ai ensuite intégré ces modèles dans l’ERP et validé leur bon fonctionnement
+
+Dans une troisième mission, j’ai mis en place des scénarios d’automatisation avec Make, afin de faciliter la migration de données clients depuis des fichiers Excel vers Axelor.
+Les workflows que j’ai conçus permettent de lire les fichiers, nettoyer et valider les données, puis de les injecter automatiquement dans Axelor via son API REST.
+
+Enfin, ma mission principale a porté sur le développement de l’application Control Tower SupplyChain, un outil d’aide à la décision pour les superviseurs de la supplychain.
+Cette application permet de visualiser les KPIs de la Supply Chain en temps réel, via un dashboard personnalisable contenant des widgets dynamiques : cartes, chart, tableaux ou cartes géographiques.
+L’utilisateur peut se connecter de manière sécurisée, choisir les indicateurs qu’il souhaite suivre, et configurer son propre espace de travail.
+Techniquement, le frontend est développé en React, et le backend repose sur Supabase, avec une migration vers FastAPI prévue pour la suite du projet.
+----------------------------------------------------------------------------------------------------
+
+Je vais maintenant vous présenter une démonstration du fonctionnement de l’application Control Tower SupplyChain.
+----------------------------------------------------------------------------------------------------
+
+Plusieurs axes d’amélioration ont été identifiés pour renforcer l'application à long terme
+d'abord la migration totale de Supabase vers FastAPI, pour obtenir une architecture plus performante et mieux contrôlée cote backend.
+
+ensuite, la création d’un module de l'IA , permettant d’approvisionnement afin de gérer les demandes d’achat, commandes fournisseurs et ainsi de suite.
+
+ainsi l’enrichissement du dashboard avec de nouveaux KPIs et l’optimisation de l’expérience utilisateur
+----------------------------------------------------------------------------------------------------
+
+Pour conclure, ce stage chez AccurConsulting a été une expérience enrichissante, à la fois sur le plan technique et humain.
+J’ai pu mettre en pratique mes compétences en développement web, en intégration d’outils professionnels et en gestion de projet Agile, tout en participant à une réelle transformation numérique.
+Ce stage m’a permis de confirmer mon intérêt pour les technologies web, la Supply Chain digitale, et le pilotage intelligent des données.
+Je tiens à remercier Monsieur Taha Chelyah, mon tuteur, ainsi que toute l’équipe d’AccurConsulting pour leur accompagnement, leur confiance et leur bienveillance tout au long de cette expérience.
+Merci beaucoup pour votre attention.”

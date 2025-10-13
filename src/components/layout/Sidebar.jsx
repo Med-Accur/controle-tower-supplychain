@@ -1,5 +1,5 @@
 import { NavLink,useLocation } from "react-router-dom";
-import logo2 from "../../assets/logo2.png";
+import logo3 from "../../assets/logo3.png";
 import logo from "../../assets/logo.png";
 import {Home,Factory ,Users,WalletCards ,Warehouse,Store  } from "lucide-react";
 
@@ -23,7 +23,7 @@ export default function Sidebar({ isCollapsed }) {
     >
       <div className="flex items-center justify-center h-18 border-b border-gray-200">
         {!isCollapsed ? (
-          <img src={logo2} alt="Logo" className="p-4"/>
+          <img src={logo3} alt="Logo" className="p-6"/>
         ) : (
             <img src={logo} alt="Logo" className="h-10 w-10"/>
         )}

@@ -6,7 +6,6 @@ import * as Icons from "lucide-react";
 import { useDashboard } from "../hooks/dashboard/useDashboard";
 
 export default function KpiCards({ cards = [], kpi }) {
-  console.log("KpiCards props:", { cards, kpi });
   const { table, fetchDataWidget} = useDashboard();
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const [selectedKpis, setSelectedKpis] = useState(kpi);
@@ -25,10 +24,10 @@ export default function KpiCards({ cards = [], kpi }) {
         fetchDataWidget(kpi);
     });
   }, []);
+  
   return (
     <>
       {table && selectedKpis.map((key, index) => {
-       
         const kpi = cards.find(k => k.key === key);
         const Icon = Icons[kpi.icon];
         return (
@@ -36,7 +35,8 @@ export default function KpiCards({ cards = [], kpi }) {
                 <Card
                     className="bg-white"
                     title={kpi.nom}
-                    value={table[key]}
+                   value={table[key] ? JSON.stringify(table[key]) : 'N/A'}
+
                     unit={kpi.unit}
                     icon={<Icon className="w-6 h-6 text-[#A79882]" />}
                 />
