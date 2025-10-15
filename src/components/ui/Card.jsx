@@ -8,7 +8,7 @@ export default function Card({
   className = "",
 }) {
   return (
-    <div className={`rounded-2xl border border-[#D6D6D6] bg-[#F9FAFB] p-5 shadow-sm md:p-6 ${className}`}>
+    <div className={className}>
       <div className="flex items-center justify-center w-12 h-12 bg-[#f0eee9] rounded-xl">
         <div className="text-[#A79882] text-xl">{icon}</div>
       </div>

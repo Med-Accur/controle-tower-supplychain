@@ -34,10 +34,10 @@ export default function Dashboard() {
     let y = 0;
 
     const allWidgets = [
-      ...selectedKpis.chart.map((item) => ({ ...item, type: "chart", w: 2, h: 3 })),
-      ...selectedKpis.card.map((item) => ({ ...item, type: "card", w: 1, h: 1.5 })),
-      ...selectedKpis.table.map((item) => ({ ...item, type: "table", w: 2, h: 3 })),
-      ...selectedKpis.map.map((item) => ({ ...item, type: "map", w: 2, h: 3 })),
+      ...selectedKpis.chart.map((item) => ({ ...item, type: "chart", w: 2, h: 2.5 })),
+      ...selectedKpis.card.map((item) => ({ ...item, type: "card", w: 1, h: 1.25 })),
+      ...selectedKpis.table.map((item) => ({ ...item, type: "table", w:2 , h: 2.5 })),
+      ...selectedKpis.map.map((item) => ({ ...item, type: "map", w: 2, h: 2.5 })),
     ];
 
     allWidgets.forEach((item) => {
@@ -89,7 +89,7 @@ export default function Dashboard() {
 
   return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-4">Acceuil</h1>
 
       <div className={`flex gap-2 mb-4 ${isCollapsed ? "mr-64" : "mr-0"}`}>
         <Button
@@ -110,16 +110,15 @@ export default function Dashboard() {
       <DashboardLayout
         isCollapsed={isCollapsed}
         onSelectionChange={setSelectedKpis}
-        initialSelectedWidgets={widgets} // <-- Passe les widgets déjà choisis
+        initialSelectedWidgets={widgets}
       />
 
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+        breakpoints={{ lg: 1000, md: 996, sm: 768, xs: 480 }}
         cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
-        rowHeight={160}
-        margin={[20, 10]}
+        
         isResizable={false}
         isDraggable={true}
         onLayoutChange={handleLayoutChange}
@@ -127,7 +126,7 @@ export default function Dashboard() {
       >
         {selectedKpis.card.map((item) => (
           <div key={`card-${item.key}`} className="bg-white shadow rounded">
-            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.key}</div>
+            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.nom}</div>
             <div className="no-drag p-4">
               <CardWidget kpi={[item]} />
             </div>
@@ -135,7 +134,7 @@ export default function Dashboard() {
         ))}
         {selectedKpis.chart.map((item) => (
           <div key={`chart-${item.key}`} className="bg-white shadow rounded">
-            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.key}</div>
+            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.nom}</div>
             <div className="no-drag p-4">
               <ChartWidget tableInfo={[item]} />
             </div>
@@ -143,7 +142,7 @@ export default function Dashboard() {
         ))}
         {selectedKpis.table.map((item) => (
           <div key={`table-${item.key}`} className="bg-white shadow rounded">
-            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.key}</div>
+            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.nom}</div>
             <div className="no-drag p-4">
               <TableWidget tableInfo={[item]} />
             </div>
@@ -151,7 +150,7 @@ export default function Dashboard() {
         ))}
         {selectedKpis.map.map((item) => (
           <div key={`map-${item.key}`} className="bg-white shadow rounded">
-            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.key}</div>
+            <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.nom}</div>
             <div className="no-drag p-4">
               <MapWidget mapInfo={[item]} />
             </div>

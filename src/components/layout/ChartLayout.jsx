@@ -3,18 +3,18 @@ import Button from "../ui/Button";
 import { X } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
-export default function ChartLayout({ isCollapsed, setIsCollapsed, onSelectionChange }) {
+export default function ChartLayout({ isCollapsed, setIsCollapsed, onSelectionChange, chartModule }) {
   const [grouped, setGrouped] = useState({});
   const { meData } = useAuth();
-  const [checkedItems, setCheckedItems] = useState({
-  chart: {},
-});
-    const [activeGroup, setActiveGroup] = useState("chart");
+  const [checkedItems, setCheckedItems] = useState({ chart: {}});
+  const [activeGroup, setActiveGroup] = useState("chart");
+
   useEffect(() => {
     setGrouped({
-      chart: meData?.chart,
+      chart: chartModule,
     });
-  }, [meData]);
+  }, [chartModule]);
+  
   
   useEffect(() => {
   const selections = {};

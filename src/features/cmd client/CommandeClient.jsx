@@ -21,82 +21,79 @@ export default function CommandeClient() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selectedKpis, setSelectedKpis] = useState({ chart: [] });
 
-  // Générer un layout flexible
+ const chartcmd = chart.filter((k) => k.module === "cmd_client")
+ const kpicmd = kpi.filter((k) => k.module === "cmd_client");
  const generateLayout = (cols) => {
   const itemWidth = Math.max(1, Math.floor(cols / 2)); // largeur par défaut
   return selectedKpis.chart.map((item, index) => {
     const x = (index * itemWidth) % cols;  // placement horizontal respectant w
     const y = Math.floor((index * itemWidth) / cols); // placement vertical
-
+    console.log(itemWidth)
     return {
       i: `chart-${item.key}`,
       x,
       y,
       w: itemWidth,
-      h: 2.2, // hauteur fixe
+      h: 2.2, 
     };
   });
 };
 
-
-  // Layouts responsives
   const layouts = {
-    lg: generateLayout(4), // Desktop : 4 colonnes
-    md: generateLayout(2), // Tablette : 2 colonnes
-    sm: generateLayout(1), // Mobile : 1 colonne
+    lg: generateLayout(4),
+    md: generateLayout(2), 
+    sm: generateLayout(1), 
     xs: generateLayout(1),
   };
 
-  const kpicmd = kpi.filter((k) => k.module === "cmd_client");
-
-  return (
+ return (
     <div className="px-10 py-6">
       <h1 className="text-2xl font-bold mb-4">Commande client</h1>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <KpiCards cards={kpicmd} kpi={defaultKpis} />
-      </div>
-
-      {/* Sélecteur de charts */}
-      <ChartLayout
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-        onSelectionChange={setSelectedKpis}
-      />
-
-      {/* Bouton Ajouter Widget */}
-      <Button
-        className="bg-[#bfa76f] text-white p-2 rounded mb-6"
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          <KpiCards cards={kpicmd} kpi={defaultKpis} />
+        </div>
+        <ChartLayout
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          onSelectionChange={setSelectedKpis}
+          chartModule={chartcmd}
+        />
+        <Button
+          className="bg-[#bfa76f] text-white p-2 rounded mb-6"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          Ajouter Widget
+        </Button>
+        {selectedKpis.chart.length === 0 ? (
+  <div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-2xl border border-dashed border-gray-300 text-gray-500">
+    <p className="text-lg mb-2">Aucun graphique sélectionné</p>
+    <p className="text-sm">Cliquez sur le bouton pour ajouter des charts</p>
+  </div>
+) : (
+  <ResponsiveGridLayout
+    className="layout"
+    layouts={layouts}
+    breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+    cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
+    isResizable={false}
+    isDraggable={true}
+    compactType="vertical"
+    draggableHandle=".drag-handle"
+  >
+    {selectedKpis.chart.map((item) => (
+      <div
+        key={`chart-${item.key}`}
+        className="bg-white rounded shadow rounded-2xl border border-[#D6D6D6]"
       >
-        Ajouter Widget
-      </Button>
-
-
-      <ResponsiveGridLayout
-        className="layout"
-        layouts={layouts}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
-        cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
-        isResizable={false}  
-        isDraggable={true} 
-        compactType="vertical"
-         draggableHandle=".drag-handle"
->
-  {selectedKpis &&
-    selectedKpis.chart.map((item) => (
-      <div key={`chart-${item.key}`} className="bg-white rounded shadow rounded-2xl border border-[#D6D6D6]">
-        {/* Header = zone de drag */}
-        <div className="drag-handle p-2 cursor-move bg-[#f0ede5] rounded-t-2xl"/>
-        
-        {/* Contenu = non draggable */}
+        <div className="drag-handle p-2 cursor-move bg-[#f0ede5] rounded-t-2xl" />
         <div className="no-drag">
           <ChartWidget tableInfo={[item]} />
         </div>
       </div>
     ))}
-</ResponsiveGridLayout>
-      </div>
+  </ResponsiveGridLayout>
+)}
+    </div>
   );
 }
+

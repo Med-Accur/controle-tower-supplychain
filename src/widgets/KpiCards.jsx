@@ -33,7 +33,7 @@ export default function KpiCards({ cards = [], kpi }) {
         return (
             <div key={index} className="relative group">
                 <Card
-                    className="bg-white"
+                    className="bg-white rounded-2xl border border-[#D6D6D6] bg-[#F9FAFB] p-5 shadow-sm md:p-6"
                     title={kpi.nom}
                    value={table[key] ? JSON.stringify(table[key]) : 'N/A'}
 
