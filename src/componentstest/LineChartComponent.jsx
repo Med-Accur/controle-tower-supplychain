@@ -16,7 +16,7 @@ export function LineChartComponent({ data, labelKey, kpiKey }) {
         <XAxis dataKey={labelKey} tickFormatter={formatDate} />
         <YAxis/>
         <Tooltip labelFormatter={formatDate} />
-        <Line type="monotone" dataKey={kpiKey} stroke="#82ca9d" />
+        <Line type="monotone" dataKey={kpiKey} stroke="#402363" />
       </LineChart>
     </ResponsiveContainer>
   );

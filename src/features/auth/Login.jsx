@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo-login1.png";
 import { useAuth } from "../../context/AuthContext";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -26,15 +26,12 @@ export default function Login() {
   return (
     <div className="flex h-screen overflow-hidden">
       <aside className="w-1/2 bg-[#341B49] text-white flex flex-col items-center justify-center p-12">
-        <img src={logo} alt="Logo" className="w-80 h-80 mb-10" />
-        <h1 className="font-serif text-4xl leading-tight text-center">
-          Control Tower<br />Supply Chain
-        </h1>
+        <img src={logo} alt="Logo" className="" />
       </aside>
       <main className="w-1/2 flex items-center justify-center">
         <form onSubmit={handleLogin} className="w-96">
           <h2 className="text-center text-2xl font-bold text-neutral-800 mb-12">
-            Se Connecter
+            Se connecter
           </h2>
           <div className="my-2">
             <label className="block text-xs text-neutral-500 mb-1">Email</label>
@@ -64,7 +61,7 @@ export default function Login() {
             Se connecter
           </Button>
           <p className="my-2 text-center text-xs text-neutral-700 mb-8">
-            Mot de Passe Oublié ?{" "}
+            Mot de passe oublié ?{" "}
             <Link to="/forgetpassword" className="font-bold underline text-neutral-800">
               Cliquez ici
             </Link>

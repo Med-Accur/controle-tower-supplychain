@@ -1,45 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Button from "../ui/Button";
 import { useAuth } from "../../context/AuthContext";
 import Input from "../ui/Input";
+import { X } from "lucide-react";
 
-export default function DashboardLayout({ isCollapsed, onSelectionChange, initialSelectedWidgets = [] }) {
+export default function DashboardLayout({ setIsCollapsed, isCollapsed, onSelectionChange, initialSelectedWidgets = [] }) {
   const { meData } = useAuth();
 
-  const [grouped, setGrouped] = useState({});
-  const [activeGroup, setActiveGroup] = useState("card");
-  const [checkedItems, setCheckedItems] = useState({
-    card: {},
-    table: {},
-    chart: {},
-    map: {},
-  });
+  const grouped = useMemo(() => ({
+    Carte: meData?.kpi || [],
+    Graphique: meData?.chart || [],
+    Tableau: meData?.table || [],
+    Plan: meData?.maps || [],
+  }), [meData]);
 
-  // Charger les widgets disponibles
-  useEffect(() => {
-    if (!meData || Object.keys(meData).length === 0) return;
-    setGrouped({
-      card: meData?.kpi || [],
-      chart: meData?.chart || [],
-      table: meData?.table || [],
-      map: meData?.maps || [],
-    });
-  }, [meData]);
+  const [activeGroup, setActiveGroup] = useState("Carte");
 
-  // Initialiser les widgets déjà sélectionnés
-  useEffect(() => {
-    const initialChecked = { card: {}, chart: {}, table: {}, map: {} };
-
+  // Initialiser checkedItems une seule fois
+  const initialCheckedItems = useMemo(() => {
+    const initial = { Carte: {}, Graphique: {}, Tableau: {}, Plan: {} };
     (initialSelectedWidgets || []).forEach((w) => {
       const group = grouped[w.widget_type];
       if (group) {
         const item = group.find((i) => i.key === w.widget_key) || { key: w.widget_key, nom: w.widget_key };
-        initialChecked[w.widget_type][w.widget_key] = item;
+        initial[w.widget_type][w.widget_key] = item;
       }
     });
-
-    setCheckedItems(initialChecked);
+    return initial;
   }, [initialSelectedWidgets, grouped]);
+
+  const [checkedItems, setCheckedItems] = useState(initialCheckedItems);
 
   // Met à jour selectedKpis à chaque changement de checkbox
   useEffect(() => {
@@ -65,25 +55,25 @@ export default function DashboardLayout({ isCollapsed, onSelectionChange, initia
   if (!isCollapsed) return null;
 
   return (
-    <div className="fixed z-20 w-72 top-18 right-0 h-screen flex flex-col bg-white border-l border-gray-200 transition-width duration-500">
+    <div className="fixed z-20 w-85 top-18 right-0 h-screen flex flex-col bg-white border-l border-gray-200 transition-width duration-500">
       <nav className="flex flex-col h-full">
-        <div className="bg-[#f0ede5] h-16 flex items-center justify-center">
+        <div className="px-4 bg-[#f0ede5] h-16 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Ajouter un Widget</h2>
+          <button onClick={() => setIsCollapsed(false)} className="text-gray-600 hover:text-gray-800">
+            <X className="w-5 h-5"/>
+          </button>
         </div>
+        
         <div className="p-4 flex flex-col items-start space-y-2">
-          <div className="flex space-x-3">
-            {["card", "chart", "table", "map"].map((groupKey) => (
+          <div className="flex space-x-2">
+            {["Carte", "Graphique", "Tableau", "Plan"].map((groupKey) => (
               <div key={groupKey}>
                 <Button
                   children={groupKey}
                   onClick={() => setActiveGroup(groupKey)}
-                  className={`px-3 py-1 rounded-sm ${
-                    activeGroup === groupKey ? "bg-[#f0ede5] text-[#bfa76f]" : "text-[#3c352f] hover:bg-[#f0ede5]"
-                  }`}
+                  className={`px-3 py-1 rounded-sm ${activeGroup === groupKey ? "bg-[#f0ede5] text-[#bfa76f]" : "text-[#3c352f] hover:bg-[#f0ede5]"}`}
                 />
-                <div
-                  className={`h-[2px] mt-3 w-full ${activeGroup === groupKey ? "bg-[#bfa76f]" : "bg-transparent"}`}
-                />
+                <div className={`h-[2px] mt-3 w-full ${activeGroup === groupKey ? "bg-[#bfa76f]" : "bg-transparent"}`} />
               </div>
             ))}
           </div>

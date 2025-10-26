@@ -14,7 +14,7 @@ export default function Card({
       </div>
       <div className="flex items-end justify-between mt-5">
         <div>
-          <span className="text-md text-gray-500">{title}</span>
+          <span className="block text-md text-gray-500 truncate max-w-[240px]">{title}</span>
             <h4 className="mt-2 font-bold text-[#402363] text-2xl">{value} {unit}</h4>
         </div>
       </div>

@@ -20,10 +20,10 @@ export function useDashboard() {
         }
     };
 
-    const fetchDataWidget = async (rpcName, filters) => {
+    const fetchDataWidget = async (rpcName, filters, module) => {
         setLoading(true);
           try {
-            const rawData = await getDataWidget(rpcName, filters);
+            const rawData = await getDataWidget(rpcName, filters, module);
             const dataRaw = rawData?.[rpcName] ?? rawData ?? null;
             const data = (dataRaw && dataRaw[rpcName] !== undefined) ? dataRaw[rpcName] : dataRaw;
             setTable((prev) => ({
@@ -35,16 +35,23 @@ export function useDashboard() {
           }
       };
 
-    const  saveWidget = async (widget) => {
-        setLoading(true);
-          try {
-             const data = await postWidget(widget);
-           } catch (err) {
-           setError(err.message);
-           } finally {
-            setLoading(false);
-        }
-    };
+    const saveWidget = async (widgetList, module) => {
+    if (!module) {
+      console.warn("⚠️ Aucun module fourni !");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const data = await postWidget(widgetList, module);
+      console.log("Widgets sauvegardés :", data);
+    } catch (err) {
+      setError(err.message);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     return {
     widget,
