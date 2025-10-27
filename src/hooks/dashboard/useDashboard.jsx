@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {  getDataWidget, getWidget, postWidget } from "../../servicess/dashboard/dashboardServices";
 
 
@@ -8,7 +8,9 @@ export function useDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- const  fetchWidget = async () => {
+ 
+
+   const  fetchWidget = async () => {
         setLoading(true);
           try {
              const data = await getWidget();
@@ -19,7 +21,6 @@ export function useDashboard() {
             setLoading(false);
         }
     };
-
     const fetchDataWidget = async (rpcName, filters, module) => {
         setLoading(true);
           try {

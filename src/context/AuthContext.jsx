@@ -6,26 +6,27 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [meData, setMeData] = useState(null); // ⚡ données /config/me
+  const [meData, setMeData] = useState(null); 
   const [loading, setLoading] = useState(true);
 
+  const fetchUserAndMe = async () => {
+    try {
+      const configData = await getWidget();
+      setUser({ id: configData.id, email: configData.email });
+      setMeData(configData);
+    } catch (err) {
+      console.error("Erreur récupération user/config:", err);
+      setUser(null);
+      setMeData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserAndMe = async () => {
-      try {
-          const configData = await getWidget();
-          setUser({ id: configData.id, email: configData.email });
-          setMeData(configData);
-        
-      } catch (err) {
-        console.error("Erreur récupération user ou config:", err);
-        setUser(null);
-        setMeData(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUserAndMe();
+    fetchUserAndMe(); // une seule fois au montage
   }, []);
+
 
   const login = async (email, password) => {
     const data = await authService.signIn(email, password);
@@ -45,7 +46,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, meData, login, logout }}>
+    <AuthContext.Provider value={{ user, meData, refreshMeData: fetchUserAndMe, login, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );

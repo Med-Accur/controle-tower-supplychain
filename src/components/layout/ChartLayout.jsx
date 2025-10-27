@@ -17,7 +17,7 @@ export default function ChartLayout({
     if (!meData || !meData.chart) return { Graphique: [] };
     const chartcmd = meData.chart.filter((k) => k.module === chartModule);
     return { Graphique: chartcmd || [] };
-  }, [meData, chartModule]);
+  }, [meData]);
 
   const [activeGroup, setActiveGroup] = useState("Graphique");
 
@@ -37,7 +37,7 @@ export default function ChartLayout({
   const [checkedItems, setCheckedItems] = useState(initialCheckedItems);
 
   // Mettre à jour la sélection à chaque changement
-  useEffect(() => {
+ useEffect(() => {
     const selections = {};
     for (const group in checkedItems) {
       selections[group] = Object.values(checkedItems[group]);

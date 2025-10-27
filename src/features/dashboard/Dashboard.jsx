@@ -14,11 +14,11 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard() {
   const { saveWidget } = useDashboard();
-  const { meData } = useAuth();
+  const { meData, refreshMeData } = useAuth();
   const { widgets } = meData || {};
   const [isCollapsed, setIsCollapsed] = useState(false);
  
-  const widget = widgets.filter((k) => k.dashboard === "dashboard");
+  const widget = widgets?.filter((k) => k.dashboard === "dashboard");
   const [selectedKpis, setSelectedKpis] = useState({
     Carte: [],
     Tableau: [],
@@ -84,6 +84,7 @@ export default function Dashboard() {
       return { key, type, x: item.x, y: item.y, w: item.w, h: item.h };
     });
     await saveWidget(payload, "dashboard");
+    await refreshMeData();
   };
 
   return (
@@ -137,7 +138,6 @@ export default function Dashboard() {
         layouts={layouts}
         breakpoints={{ lg: 1000, md: 996, sm: 768, xs: 480 }}
         cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
-        
         isResizable={false}
         isDraggable={true}
         onLayoutChange={handleLayoutChange}

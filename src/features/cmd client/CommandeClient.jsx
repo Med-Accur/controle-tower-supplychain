@@ -17,16 +17,20 @@ const defaultKpis = [
 ];
 
 export default function CommandeClient() {
-  const { meData } = useAuth();
-  
-  const { chart, kpi } = meData || {};
+  const { meData, refreshMeData  } = useAuth();
+  const { saveWidget } = useDashboard();
+  const { chart, kpi, widgets } = meData || {};
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [layout, setLayout] = useState([]);
+  
   const [selectedKpis, setSelectedKpis] = useState({ Graphique: [] });
 
   
  const isEmpty = Object.values(selectedKpis).every((arr) => arr.length === 0);
+ const widget = widgets.filter((k) => k.dashboard === "cmd_client");
  const kpicmd = kpi.filter((k) => k.module === "cmd_client");
+
+ const [layout, setLayout] = useState([]);
+
  const generateLayout = (cols) => {
   const itemWidth = Math.max(1, Math.floor(cols / 2)); 
   return selectedKpis.Graphique.map((item, index) => {
@@ -50,8 +54,19 @@ export default function CommandeClient() {
     xs: generateLayout(1),
   };
 
- 
-  
+  const handleLayoutChange = (currentLayout) => {
+    setLayout(currentLayout);
+  };
+
+  const handleSave = async () => {
+    const payload = layout.map((item) => {
+      const [type, key] = item.i.split("-");
+      return { key, type, x: item.x, y: item.y, w: item.w, h: item.h };
+    });
+    
+    await saveWidget(payload, "cmd_client");
+    await refreshMeData();
+  };
  return (
     <div className="px-10 py-6">
       <h1 className="text-2xl font-bold mb-4 px-2.5 text-[#402363]">Commande client</h1>
@@ -63,23 +78,28 @@ export default function CommandeClient() {
           setIsCollapsed={setIsCollapsed}
           onSelectionChange={setSelectedKpis}
           chartModule="cmd_client"
+          initialSelectedWidgets={widget}
         />
-        <div className="px-2.5">
-          
-          {isEmpty ? null :
-          <div className={`flex gap-2`}>
-            
-            <Button
-          className="bg-[#bfa76f] text-white p-2 rounded mb-6"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
-          Ajouter un graphique
-        </Button>
-        </div>
-          }
-        
-        </div>
-        {isEmpty ? (
+        <div className={`flex gap-2 mb-4 px-2.5 ${isCollapsed ? "mr-64" : "mr-0"}`}>
+               
+               <Button
+                  className="bg-[#402363] text-white  p-2 rounded mb-6"
+                  onClick={handleSave}
+                >
+                  Sauvegarder
+                </Button>
+                {isEmpty ? null :
+                  <div className={`flex gap-2`}>
+                 
+                <Button
+                  className="bg-[#bfa76f] text-white  p-2 rounded mb-6"
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                >
+                  Ajouter un widget
+                </Button>
+                </div>}
+              </div>
+        {isEmpty &&
           <div className="px-2.5">
           <div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-2xl border border-dashed border-gray-300 text-gray-500">
             <p className="text-lg mb-2">Aucun graphique sélectionné</p>
@@ -94,16 +114,18 @@ export default function CommandeClient() {
             </div>
           </div>
           </div>
-) : (
+}
   <ResponsiveGridLayout
     className="layout"
     layouts={layouts}
     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
     cols={{ lg: 4, md: 2, sm: 1, xs: 1 }}
-    isResizable={false}
-    isDraggable={true}
-    compactType="vertical"
-    draggableHandle=".drag-handle"
+    
+
+        isResizable={false}
+        isDraggable={true}
+        onLayoutChange={handleLayoutChange}
+        draggableCancel=".no-drag"
   >
     {selectedKpis.Graphique.map((item) => (
       <div key={`Graphique-${item.key}`} className="bg-white shadow rounded">
@@ -114,7 +136,7 @@ export default function CommandeClient() {
       </div>
     ))}
   </ResponsiveGridLayout>
-)}
+
     </div>
   );
 }

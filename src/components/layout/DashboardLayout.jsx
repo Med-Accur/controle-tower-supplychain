@@ -5,7 +5,7 @@ import Input from "../ui/Input";
 import { X } from "lucide-react";
 
 export default function DashboardLayout({ setIsCollapsed, isCollapsed, onSelectionChange, initialSelectedWidgets = [] }) {
-  const { meData } = useAuth();
+  const { meData } = useAuth(); 
 
   const grouped = useMemo(() => ({
     Carte: meData?.kpi || [],
