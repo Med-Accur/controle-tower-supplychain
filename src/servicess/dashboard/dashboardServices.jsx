@@ -10,7 +10,7 @@ export async function getWidget() {
 
 
 export async function getDataWidget(rpc_name, params = {}) {
-  const {data} = await api.post("api/pre/acceuil/widgets", {
+  const {data} = await api.post("api/pre/accueil/widgets", {
     rpcs: [
       {
         rpc_name,
