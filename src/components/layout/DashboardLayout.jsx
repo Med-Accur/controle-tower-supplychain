@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 export default function DashboardLayout({ setIsCollapsed, isCollapsed, onSelectionChange, initialSelectedWidgets = [] }) {
   const { meData } = useAuth(); 
-
+  if (!meData) return null;
   const grouped = useMemo(() => ({
     Carte: meData?.kpi || [],
     Graphique: meData?.chart || [],
@@ -30,13 +30,15 @@ export default function DashboardLayout({ setIsCollapsed, isCollapsed, onSelecti
   }, [initialSelectedWidgets, grouped]);
 
   const [checkedItems, setCheckedItems] = useState(initialCheckedItems);
-
+  
   // Met à jour selectedKpis à chaque changement de checkbox
   useEffect(() => {
     const selections = {};
     for (const group in checkedItems) {
       selections[group] = Object.values(checkedItems[group]);
+      console.log(`Groupe: ${group}, Sélectionnés:`, selections[group]);
     }
+    console.log("Sélections mises à jour :", selections);
     onSelectionChange(selections);
   }, [checkedItems, onSelectionChange]);
 
