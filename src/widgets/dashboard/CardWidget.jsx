@@ -3,7 +3,7 @@ import * as Icons from "lucide-react";
 import Card from "../../components/ui/Card"
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
 
-export default function CardWidget({ kpi = [] }) {
+export default function CardWidget({ kpi = [], module }) {
   const { table, fetchDataWidget } = useDashboard();
   const fetchedKeysRef = useRef(new Set());
 
@@ -12,7 +12,7 @@ export default function CardWidget({ kpi = [] }) {
    
     if (keysToFetch.length === 0) return;
     keysToFetch.forEach((k) => {
-      fetchDataWidget(k.key);
+      fetchDataWidget(k.key, {}, module);
       fetchedKeysRef.current.add(k.key);
     });
   }, [kpi]);

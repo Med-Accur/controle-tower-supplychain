@@ -29,7 +29,7 @@ const columnLabels = tableInfo[0]?.colonnes.map(col => ({
  
     {table && tableInfo[0]?.colonnes.length > 0 && (
      <div className="">
-  <Box className="no-drag" sx={{ height: 300, width: "100%" }}>
+  <Box className="no-drag" sx={{ height: 330, width: "100%" }}>
     <DataGrid
       key={(row) => row._rowId}
       rows={rows || []}

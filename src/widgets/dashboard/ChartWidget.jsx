@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import ChartCard from "../../componentstest/ChartCard";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
 
-export default function ChartWidget({ tableInfo = [] }) {
+export default function ChartWidget({ tableInfo = [], module }) {
   const { table, fetchDataWidget } = useDashboard();
   const [rpcName, setRpcName] = useState(null);
-
+  
+  
   useEffect(() => {
     const name = tableInfo[0]?.rpc_name;
     setRpcName(name);
     if (name) {
-      fetchDataWidget(name);
+      fetchDataWidget(name, {}, module);
     }
   }, []);
 
@@ -23,9 +24,8 @@ export default function ChartWidget({ tableInfo = [] }) {
   const defaultChart = availableCharts[0];
   const filter = tableInfo[0]?.filtre || [];
 
-  const handleFilterApply = (filters) => {
-    console.log("Applying filters:", filters);
-    fetchDataWidget(rpcName, filters); 
+  const handleFilterApply =  async (filters) => {
+    await fetchDataWidget(rpcName, filters, module); 
   };
 
   return (

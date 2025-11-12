@@ -9,8 +9,9 @@ export async function getWidget() {
 
 
 
-export async function getDataWidget(rpc_name, params = {}) {
-  const {data} = await api.post("api/pre/accueil/widgets", {
+export async function getDataWidget(rpc_name, params = {},module) {
+  
+  const {data} = await api.post(`api/pre/${module}/widgets`, {
     rpcs: [
       {
         rpc_name,
@@ -23,8 +24,8 @@ export async function getDataWidget(rpc_name, params = {}) {
 }
 
 
-export async function postWidget(widget) {
-  const {data} = await api.post("api/pre/config/me/widgets", widget);
+export async function postWidget(widget, module) {
+  const { data } = await api.post(`/api/pre/config/me/${module}/widgets`, widget);
   return data;
 }
 

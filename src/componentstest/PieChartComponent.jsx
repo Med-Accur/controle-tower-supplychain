@@ -4,7 +4,7 @@ import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
  // Métrique = rouge, reste = vert
 
 export function PieChartComponent({data,dataKey,kpiKey, kpiLabel}) {
-  const colors = ["#FF8042", "#00C49F"];
+  const colors = ["#402363", "#B5A995"];
 
   
   const totalGlobal = data.reduce((sum, item) => sum + (item[dataKey]), 0);
@@ -30,8 +30,8 @@ export function PieChartComponent({data,dataKey,kpiKey, kpiLabel}) {
           outerRadius={80}
           label={(entry) =>
             totalGlobal > 0
-              ? `${entry.name}: ${(entry.value / totalGlobal * 100).toFixed(1)}%`
-              : `${entry.name}: 0%`
+              ? `${entry.name} : ${(entry.value / totalGlobal * 100).toFixed(1)}%`
+              : `${entry.name} : 0%`
           }
         >
           {pieData.map((entry, index) => (

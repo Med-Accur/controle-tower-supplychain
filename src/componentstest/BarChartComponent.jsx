@@ -15,7 +15,7 @@ export function BarChartComponent({ data, labelKey, kpiKey }) {
         <XAxis dataKey={labelKey} tickFormatter={formatDate} />
         <YAxis />
         <Tooltip labelFormatter={formatDate} />
-        <Bar dataKey={kpiKey} fill="#8884d8" />
+        <Bar dataKey={kpiKey} fill="#402363" />
       </BarChart>
     </ResponsiveContainer>
   );
