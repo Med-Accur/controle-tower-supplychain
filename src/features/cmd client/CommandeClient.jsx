@@ -12,7 +12,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const defaultKpis = [
   "kpi_nb_commandes",
   "kpi_otif",
-  "kpi_taux_retards",
+  "kpi_duree_moyenne_changelog",
   "kpi_duree_cycle_moyenne_jours",
 ];
 

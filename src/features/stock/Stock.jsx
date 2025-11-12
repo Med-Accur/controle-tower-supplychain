@@ -9,7 +9,7 @@ import "react-grid-layout/css/styles.css";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-const defaultKpis = ["kpi_days_on_hand", "kpi_inventory_to_sales", "kpi_rentabilite_stock", "kpi_taux_rotation"];
+const defaultKpis = ["kpi_stock_disponible", "kpi_inventory_to_sales","kpi_days_on_hand", "kpi_taux_rotation"];
 
 export default function Stock() {
   const { meData, refreshMeData  } = useAuth();
@@ -64,7 +64,7 @@ export default function Stock() {
   };
  return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4 px-2.5 text-[#402363]">Stock</h1>
+      <h1 className="text-2xl font-bold mb-4 px-2.5 text-[#402363]">Stocks</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 px-2.5">
           <KpiCards cards={kpicmd} kpi={defaultKpis} />
         </div>

@@ -9,7 +9,11 @@ import "react-grid-layout/css/styles.css";
 import { useDashboard } from "../../hooks/dashboard/useDashboard";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-const defaultKpis = ["kpi_sup_on_time_rate", "kpi_sup_quality_nonconform_rate", "kpi_sup_return_rate", "kpi_sup_avg_lead_time_days"];
+const defaultKpis = [
+  "kpi_sup_quality_conform_rate", 
+  "kpi_sup_transport_cost_ratio",
+   "kpi_sup_return_rate",
+   "kpi_sup_avg_lead_time_days"];
 
 export default function Fournisseurs() {
 const { meData, refreshMeData  } = useAuth();
@@ -64,7 +68,7 @@ const { meData, refreshMeData  } = useAuth();
   };
  return (
     <div className="px-10 py-6">
-      <h1 className="text-2xl font-bold mb-4 px-2.5 text-[#402363]">Stock</h1>
+      <h1 className="text-2xl font-bold mb-4 px-2.5 text-[#402363]">Fournisseurs</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 px-2.5">
           <KpiCards cards={kpicmd} kpi={defaultKpis} />
         </div>

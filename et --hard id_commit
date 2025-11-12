@@ -1,0 +1,27 @@
+[33m01f8b9c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m news wedgets tables
+[33m5f63031[m impl des ui chart
+[33mef9daf7[m impl des chart
+[33mf98f35b[m impl format du data
+[33m5af0499[m implémentation des cartes kpi all module
+[33m4aa4eea[m version supabase
+[33m74a982d[m resolution de conflits
+[33me9a97fe[m update filtre chart
+[33m19cc29e[m test
+[33m4d7cc86[m add des filtres
+[33m0f985b2[m fixe problemes
+[33m42a3e96[m problem fixed
+[33m041c249[m add des filtres des tables
+[33m8e90614[m Merge branch 'main' of https://github.com/Med-Accur/controle-tower-supplychain
+[33m8a7be28[m implémentation de dashboard
+[33m20edb23[m resolution des conflits
+[33ma0ee1dd[m Chart complet using Service hook
+[33m5ec71d9[m amélioration de perf
+[33m8cbb697[m Merge branch 'main' of https://github.com/Med-Accur/controle-tower-supplychain
+[33mc3454bc[m amélioration de perf
+[33me9f335a[m Résolution des conflits
+[33m4fcf0c2[m refactor(auth): unification et factorisation complète de l'authentification avec context et composants UI
+[33m022864e[m implémentation du hook+services cmd client
+[33mdc529de[m Merge branch 'main' of https://github.com/Med-Accur/controle-tower-supplychain
+[33mb104130[m second commit
+[33mebd8a21[m Charts
+[33mf43d5cb[m first commit
