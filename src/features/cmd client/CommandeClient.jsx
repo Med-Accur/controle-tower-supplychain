@@ -42,7 +42,7 @@ export default function CommandeClient() {
       x,
       y,
       w: itemWidth,
-      h: 2.2, 
+      h: 2.5, 
     };
   });
 };

@@ -30,8 +30,8 @@ export function PieChartComponent({data,dataKey,kpiKey, kpiLabel}) {
           outerRadius={80}
           label={(entry) =>
             totalGlobal > 0
-              ? `${entry.name} : ${(entry.value / totalGlobal * 100).toFixed(1)}%`
-              : `${entry.name} : 0%`
+              ? `${entry.name}: ${(entry.value / totalGlobal * 100).toFixed(1)}%`
+              : `${entry.name}: 0%`
           }
         >
           {pieData.map((entry, index) => (

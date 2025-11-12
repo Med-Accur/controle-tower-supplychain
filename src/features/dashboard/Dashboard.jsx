@@ -18,17 +18,20 @@ export default function Dashboard() {
   const { widgets } = meData || {};
   const [isCollapsed, setIsCollapsed] = useState(false);
  
+  console.log("meData dans Dashboard :", widgets);
+
   const widget = widgets?.filter((k) => k.dashboard === "dashboard");
   const [selectedKpis, setSelectedKpis] = useState({
     Carte: [],
     Tableau: [],
     Graphique: [],
     Plan: [],
-  });
+  }); 
 
   const [layout, setLayout] = useState([]);
   const isEmpty = Object.values(selectedKpis).every((arr) => arr.length === 0);
 
+  console.log("Widgets sélectionnés :", selectedKpis);
   // Générer le layout initial en utilisant les positions déjà sauvegardées dans meData.widgets
   const generateLayout = (cols) => {
     let layouts = [];
@@ -75,6 +78,7 @@ export default function Dashboard() {
   };
 
   const handleLayoutChange = (currentLayout) => {
+    console.log("Layout changé :", currentLayout);
     setLayout(currentLayout);
   };
 
@@ -83,10 +87,12 @@ export default function Dashboard() {
       const [type, key] = item.i.split("-");
       return { key, type, x: item.x, y: item.y, w: item.w, h: item.h };
     });
+    console.log("Payload to save:", payload);
     await saveWidget(payload, "dashboard");
-    await refreshMeData();
+     refreshMeData();
   };
 
+  
   return (
     <div className="px-10 py-6">
       <h1 className="text-2xl font-bold mb-4 px-2.5 text-[#402363]">Accueil</h1>
@@ -160,7 +166,7 @@ export default function Dashboard() {
           </div>
         ))}
         {selectedKpis.Tableau.map((item) => (
-          <div key={`table-${item.key}`} className="bg-white shadow rounded">
+          <div key={`Tableau-${item.key}`} className="bg-white shadow rounded">
             <div className="drag-handle p-2 cursor-move bg-gray-100 font-bold">{item.nom}</div>
             <div className="no-drag p-4">
               <TableWidget tableInfo={[item]} />

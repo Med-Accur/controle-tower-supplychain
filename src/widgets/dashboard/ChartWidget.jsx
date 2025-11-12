@@ -8,9 +8,10 @@ export default function ChartWidget({ tableInfo = [], module }) {
   
   
   useEffect(() => {
-    const name = tableInfo[0]?.rpc_name;
+    const name = tableInfo[0]?.key;
     setRpcName(name);
     if (name) {
+      console.log("Fetching data for RPC:", name);
       fetchDataWidget(name, {}, module);
     }
   }, []);
